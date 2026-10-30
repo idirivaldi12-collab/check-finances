@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>💳 PayFlow - Manajemen Pembayaran & Kas</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237C6CF0'/%3E%3Cpath d='M16 22a4 4 0 0 1 4-4h22a3 3 0 0 1 0 6H20a4 4 0 0 1-4-2z' fill='%23F58FBD'/%3E%3Crect x='14' y='22' width='36' height='26' rx='5' fill='%23FFFFFF'/%3E%3Crect x='38' y='30' width='14' height='10' rx='4' fill='%237C6CF0'/%3E%3Ccircle cx='43' cy='35' r='2' fill='%23F58FBD'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#EAE3FF">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#2B2540;--muted:#8A84A3;--violet:#7C6CF0;--pink:#F58FBD;--peach:#FFC9A8;--mint:#5ACFA2;--rose:#E0558F;--clay:#E0558F;--glass:rgba(255,255,255,.72)}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Outfit',system-ui,sans-serif;color:var(--ink);min-height:100vh;background:linear-gradient(160deg,#EAE3FF 0%,#FBE4F1 52%,#FFE8D9 100%) fixed;position:relative;overflow-x:hidden}
+body::before,body::after{content:"";position:fixed;z-index:0;width:340px;height:340px;border-radius:50%;filter:blur(70px);pointer-events:none}
+body::before{top:-90px;left:-90px;background:rgba(124,108,240,.35)}
+body::after{bottom:-100px;right:-80px;background:rgba(245,143,189,.35)}
+button,input{font:inherit;color:inherit}button{cursor:pointer;border:0;background:none}
+.ic{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.serif{font-family:'Outfit',system-ui,sans-serif}
+.wrap{position:relative;z-index:1;max-width:560px;margin:0 auto;padding:24px 16px 110px}
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg,var(--violet),var(--pink));color:#fff;display:grid;place-items:center;font-size:23px;box-shadow:0 10px 22px -6px rgba(124,108,240,.6)}
+.brand h1{font-size:26px;line-height:1;font-weight:700;letter-spacing:-.5px;background:linear-gradient(90deg,#5B4BD6,#E0558F);-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand p{font-size:12px;color:var(--muted);margin-top:4px}
+.btn-soft{display:flex;align-items:center;gap:7px;padding:10px 15px;border-radius:99px;border:1px solid #fff;background:var(--glass);backdrop-filter:blur(10px);font-size:13px;font-weight:600;transition:.2s;box-shadow:0 6px 16px -8px rgba(124,108,240,.4)}
+.btn-soft:active{transform:scale(.95)}.btn-soft .ic{color:var(--violet)}
+.stats{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;margin-bottom:26px}
+.stat{border-radius:28px;padding:20px;display:flex;flex-direction:column;justify-content:space-between;min-height:166px;position:relative;overflow:hidden}
+.stat.main{background:linear-gradient(135deg,#8B7CF6 0%,#B58AF2 55%,#F58FBD 100%);color:#fff;cursor:pointer;box-shadow:0 18px 34px -12px rgba(124,108,240,.65)}
+.stat.main::after{content:"";position:absolute;right:-36px;top:-36px;width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,.18)}
+.stat.main::before{content:"";position:absolute;right:30px;bottom:-50px;width:90px;height:90px;border-radius:50%;background:rgba(255,255,255,.12)}
+.stat.pay{background:var(--glass);border:1px solid #fff;backdrop-filter:blur(12px);box-shadow:0 12px 28px -14px rgba(124,108,240,.35)}
+.lbl{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+.num{font-size:27px;font-weight:700;letter-spacing:-.8px;margin-top:6px;line-height:1.1;word-break:break-word}
+.sub{font-size:11px;opacity:.75;margin-top:3px}
+.num.neg{color:#FFE0E8;text-shadow:0 0 14px rgba(224,85,143,.8)}
+.bar{height:7px;border-radius:9px;background:rgba(255,255,255,.28);overflow:hidden;margin-top:8px}
+.bar i{display:block;height:100%;background:#fff;border-radius:9px;transition:width .5s}
+.bar.neg i{background:#FFB5CB}
+.row2{display:flex;justify-content:space-between;font-size:12px;margin-top:10px}.row2 b{font-weight:600}
+.stat.pay .num{color:var(--rose)}.stat.pay .sub{color:var(--muted);opacity:1}
+.pill{display:inline-block;margin-top:10px;padding:5px 12px;border-radius:99px;background:rgba(90,207,162,.18);color:#1E9E73;font-size:12px;font-weight:600}
+.tools{display:flex;gap:8px;margin-bottom:12px}
+.search{position:relative;flex:1}
+.search .ic{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px}
+.search input{width:100%;padding:12px 14px 12px 38px;border-radius:99px;border:1px solid #fff;background:var(--glass);font-size:13px;outline:0;backdrop-filter:blur(10px)}
+.search input:focus,.field input:focus{border-color:var(--violet);box-shadow:0 0 0 4px rgba(124,108,240,.16)}
+.search input::placeholder{color:#B2ACC8}
+.tabs{display:flex;padding:4px;border-radius:99px;background:rgba(255,255,255,.55);border:1px solid #fff;gap:2px}
+.tabs button{padding:8px 12px;border-radius:99px;font-size:12px;font-weight:600;color:var(--muted);transition:.2s}
+.tabs button.on{background:linear-gradient(135deg,var(--violet),#B58AF2);color:#fff;box-shadow:0 6px 14px -6px rgba(124,108,240,.7)}
+.listhead{display:flex;justify-content:space-between;align-items:center;margin:18px 4px 12px;font-size:12px}
+.listhead .t{font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-size:11px}
+.listhead button{font-weight:600;color:var(--violet);display:inline-flex;align-items:center;gap:5px}
+.listhead .rs{color:var(--muted);margin-left:14px}
+#paymentList{display:flex;flex-direction:column;gap:12px}
+.row{display:flex;align-items:center;gap:10px}
+.cb{appearance:none;width:27px;height:27px;border-radius:50%;border:2px solid #CFC8EA;background:rgba(255,255,255,.8);display:grid;place-content:center;cursor:pointer;flex-shrink:0;transition:.25s}
+.cb::before{content:"";width:6px;height:12px;border:solid #fff;border-width:0 2.5px 2.5px 0;margin-top:-2px;transform:rotate(45deg) scale(0);transition:transform .2s cubic-bezier(.34,1.56,.64,1)}
+.cb:checked{background:linear-gradient(135deg,#7BE0BC,var(--mint));border-color:transparent;box-shadow:0 6px 14px -4px rgba(90,207,162,.7)}.cb:checked::before{transform:rotate(45deg) scale(1)}
+.card{flex:1;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:15px 14px 15px 18px;border-radius:22px;background:var(--glass);border:1px solid #fff;backdrop-filter:blur(10px);cursor:pointer;transition:.2s;box-shadow:0 10px 24px -14px rgba(124,108,240,.45)}
+.card:hover{transform:translateY(-2px);box-shadow:0 16px 28px -14px rgba(124,108,240,.55)}
+.card .info{min-width:0}.card h4{font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card p{font-size:12px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card .amt{font-size:15px;font-weight:700;white-space:nowrap;color:#5B4BD6}
+.card.done{background:rgba(255,255,255,.4);box-shadow:none}.card.done h4{text-decoration:line-through;color:var(--muted)}.card.done .amt{color:#1E9E73}
+.right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.del{width:30px;height:30px;border-radius:50%;color:#BDB6D6;display:grid;place-items:center;font-size:15px;transition:.2s}
+.del:hover{background:rgba(224,85,143,.14);color:var(--rose)}
+.grip{touch-action:none;cursor:grab;width:34px;height:48px;display:grid;place-items:center;color:#C2BBDB;flex-shrink:0;border-radius:14px;transition:.2s}
+.grip:hover{color:var(--violet);background:rgba(255,255,255,.6)}.grip:active{cursor:grabbing}
+.row.dragging{position:relative;z-index:30;filter:drop-shadow(0 16px 24px rgba(124,108,240,.4))}
+.row.dragging .card{background:#fff;border-color:var(--violet)}
+body.drag{user-select:none;-webkit-user-select:none;cursor:grabbing}
+.empty{text-align:center;padding:40px 16px;border-radius:28px;background:var(--glass);border:1px solid #fff;color:var(--muted);font-size:13px}
+.empty b{display:block;color:var(--ink);margin:10px 0 4px}.empty .ic{font-size:32px;color:#C2BBDB}
+.fab{position:fixed;right:22px;bottom:24px;z-index:40;width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--pink));color:#fff;display:grid;place-items:center;font-size:26px;box-shadow:0 16px 28px -8px rgba(160,108,240,.75);transition:.25s}
+.fab:hover{transform:rotate(90deg) scale(1.05)}.fab:active{transform:scale(.9)}
+.modal{position:fixed;inset:0;z-index:50;display:none;align-items:flex-end;justify-content:center;background:rgba(43,37,64,.38);backdrop-filter:blur(6px);opacity:0;transition:opacity .25s}
+.modal.show{display:flex}.modal.open{opacity:1}
+.sheet{width:100%;max-width:430px;background:rgba(255,255,255,.92);border-radius:30px 30px 0 0;padding:26px;transform:translateY(40px);transition:transform .3s}
+.modal.open .sheet{transform:none}
+@media(min-width:560px){.modal{align-items:center;padding:16px}.sheet{border-radius:30px}}
+.sheet h3{font-size:21px;font-weight:700}.sheet .hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.x{width:34px;height:34px;border-radius:50%;background:#EFEAFB;display:grid;place-items:center;font-size:16px;color:var(--muted)}
+.hint{font-size:12px;color:var(--muted);margin-bottom:16px;line-height:1.5}
+.field{margin-bottom:14px}.field label{display:block;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.field input{width:100%;padding:14px 16px;border-radius:16px;border:1.5px solid #E8E2F8;background:#fff;font-size:14px;outline:0}
+.rp{position:relative}.rp span{position:absolute;left:16px;top:50%;transform:translateY(-50%);font-weight:700;color:var(--muted);font-size:14px}.rp input{padding-left:44px;font-weight:700;color:#5B4BD6}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}input[type=number]{-moz-appearance:textfield}
+.acts{display:flex;gap:10px;margin-top:20px}.acts button{flex:1;padding:14px;border-radius:99px;font-weight:600;font-size:14px}
+.acts .no{background:#EFEAFB;color:var(--muted)}.acts .ok{background:linear-gradient(135deg,var(--violet),var(--pink));color:#fff;box-shadow:0 12px 22px -10px rgba(160,108,240,.8)}.acts .ok:active{transform:scale(.97)}
+#toast{position:fixed;top:18px;left:50%;transform:translate(-50%,-90px);z-index:60;background:var(--ink);color:#fff;padding:12px 20px;border-radius:99px;font-size:13px;font-weight:500;display:flex;gap:8px;align-items:center;transition:.3s;opacity:0;pointer-events:none;box-shadow:0 14px 28px rgba(43,37,64,.35)}
+#toast.show{transform:translate(-50%,0);opacity:1}#toast .ic{color:var(--mint);font-size:16px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="i-wallet" viewBox="0 0 24 24"><path d="M19 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0 0 4h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5"/><path d="M17 13.5h.01"/></symbol>
+<symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></symbol>
+<symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 11v5M14 11v5"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></symbol>
+<symbol id="i-checks" viewBox="0 0 24 24"><path d="m2 12 5 5L18 6M12 16l1 1L22 7"/></symbol>
+<symbol id="i-pen" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></symbol>
+<symbol id="i-receipt" viewBox="0 0 24 24"><path d="M5 3v18l2-1.5 2 1.5 2-1.5 2 1.5 2-1.5 2 1.5V3l-2 1.5L15 3l-2 1.5L11 3 9 4.5 7 3zM9 8h6M9 12h6"/></symbol>
+</defs></svg>
+
+<div class="wrap">
+<header>
+  <div class="brand">
+    <div class="logo"><svg class="ic"><use href="#i-wallet"/></svg></div>
+    <div><h1 class="serif">PayFlow</h1><p>Catatan & Manajemen Keuangan</p></div>
+  </div>
+  <button class="btn-soft" onclick="openBudgetModal()"><svg class="ic"><use href="#i-sliders"/></svg>Atur Saldo</button>
+</header>
+
+<div class="stats">
+  <div class="stat main" onclick="openBudgetModal()">
+    <div>
+      <div class="lbl">Jumlah Uang</div>
+      <div id="totalBudgetDisplay" class="num serif">Rp 0</div>
+      <div class="sub">Setelah dipotong pembayaran</div>
+    </div>
+    <div>
+      <div class="row2"><span style="opacity:.7">Saldo awal</span><b id="initialBudgetDisplay">Rp 0</b></div>
+      <div class="bar" id="barWrap"><i id="budgetProgressBar" style="width:100%"></i></div>
+    </div>
+  </div>
+  <div class="stat pay">
+    <div>
+      <div class="lbl" style="color:var(--rose)">Pembayaran</div>
+      <div id="totalPaymentDisplay" class="num serif">Rp 0</div>
+      <div class="sub">Diambil dari jumlah uang</div>
+    </div>
+    <div><span class="pill" id="checkedCountDisplay">0 / 0 Item</span></div>
+  </div>
+</div>
+
+<div class="tools">
+  <div class="search"><svg class="ic"><use href="#i-search"/></svg><input id="searchInput" oninput="handleSearch()" placeholder="Cari pembayaran..."></div>
+  <div class="tabs">
+    <button id="filterAll" class="on" onclick="setFilter('all')">Semua</button>
+    <button id="filterUnpaid" onclick="setFilter('unpaid')">Pending</button>
+    <button id="filterPaid" onclick="setFilter('paid')">Lunas</button>
+  </div>
+</div>
+<div class="listhead">
+  <span class="t">Daftar Tagihan</span>
+  <span><button onclick="selectAll(true)"><svg class="ic"><use href="#i-checks"/></svg>Centang Semua</button><button class="rs" onclick="selectAll(false)">Reset</button></span>
+</div>
+<div id="paymentList"></div>
+</div>
+
+<button class="fab" onclick="openAddModal()" title="Tambah Pembayaran Baru"><svg class="ic" style="stroke-width:2.4"><use href="#i-plus"/></svg></button>
+
+<div id="addModal" class="modal" onclick="if(event.target===this)closeAddModal()">
+  <div class="sheet">
+    <div class="hd"><h3 id="modalTitle" class="serif">Tambah Pembayaran</h3><button class="x" onclick="closeAddModal()"><svg class="ic"><use href="#i-x"/></svg></button></div>
+    <p class="hint" id="modalHint">Catat tagihan baru, otomatis dipotong dari jumlah uang.</p>
+    <form onsubmit="handleAddPayment(event)">
+      <div class="field"><label>Judul / Nama Pembayaran *</label><input id="inputJudul" required placeholder="Contoh: Belanja Bulanan, Listrik, WiFi"></div>
+      <div class="field"><label>Nominal (Rp) *</label><div class="rp"><span>Rp</span><input type="number" id="inputNominal" min="1" required placeholder="0"></div></div>
+      <div class="field"><label>Keterangan / Catatan</label><input id="inputKet" placeholder="Catatan singkat (opsional)"></div>
+      <div class="acts"><button type="button" class="no" onclick="closeAddModal()">Batal</button><button type="submit" class="ok" id="modalSubmitLabel">Simpan Item</button></div>
+    </form>
+  </div>
+</div>
+
+<div id="budgetModal" class="modal" onclick="if(event.target===this)closeBudgetModal()">
+  <div class="sheet">
+    <div class="hd"><h3 class="serif">Atur Saldo</h3><button class="x" onclick="closeBudgetModal()"><svg class="ic"><use href="#i-x"/></svg></button></div>
+    <p class="hint">Masukkan jumlah uang awal Anda. Pembayaran yang dicentang otomatis dipotong dari saldo ini.</p>
+    <form onsubmit="handleSaveBudget(event)">
+      <div class="field"><label>Saldo Awal (Rp)</label><div class="rp"><span>Rp</span><input type="number" id="inputTotalBudget" min="0" required placeholder="0"></div></div>
+      <div class="acts"><button type="button" class="no" onclick="closeBudgetModal()">Batal</button><button type="submit" class="ok">Simpan Saldo</button></div>
+    </form>
+  </div>
+</div>
+
+<div id="toast"><svg class="ic"><use href="#i-check"/></svg><span id="toastMsg"></span></div>
+
+<script>
+let totalBudget = 2500000, activeFilter = 'all', searchQuery = '', editingId = null;
+let items = [
+  { id: 1, judul: 'Listrik & Air (PLN/PAM)', ket: 'Tagihan rutin bulanan', amount: 350000, checked: true },
+  { id: 2, judul: 'Belanja Sembako Utama', ket: 'Beras, minyak, daging, dll', amount: 650000, checked: false },
+  { id: 3, judul: 'Internet & WiFi Indihome', ket: 'Paket langganan 50 Mbps', amount: 280000, checked: false },
+  { id: 4, judul: 'Iuran Keamanan & Kebersihan', ket: 'Kas RT/RW', amount: 50000, checked: true }
+];
+const $ = id => document.getElementById(id);
+const icon = n => `<svg class="ic"><use href="#i-${n}"/></svg>`;
+
+document.addEventListener('DOMContentLoaded', () => { loadLocalStorage(); updateAll(); initDrag(); });
+
+function loadLocalStorage() {
+  try {
+    const b = localStorage.getItem('payflow_budget'), i = localStorage.getItem('payflow_items');
+    if (b !== null) totalBudget = parseFloat(b);
+    if (i !== null) items = JSON.parse(i);
+  } catch (e) {}
+}
+function saveLocalStorage() {
+  try { localStorage.setItem('payflow_budget', totalBudget); localStorage.setItem('payflow_items', JSON.stringify(items)); } catch (e) {}
+}
+const formatRupiah = n => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(n);
+const escapeHtml = s => s.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m]));
+
+function updateAll() {
+  const paid = items.filter(i => i.checked);
+  const totalPayment = paid.reduce((s, i) => s + i.amount, 0);
+  const remaining = totalBudget - totalPayment;
+  const el = $('totalBudgetDisplay');
+  el.textContent = formatRupiah(remaining);
+  el.className = 'num serif' + (remaining < 0 ? ' neg' : '');
+  $('initialBudgetDisplay').textContent = formatRupiah(totalBudget);
+  $('totalPaymentDisplay').textContent = formatRupiah(totalPayment);
+  $('checkedCountDisplay').textContent = `${paid.length} / ${items.length} Item`;
+  $('budgetProgressBar').style.width = (totalBudget > 0 ? Math.max(0, Math.min(100, remaining / totalBudget * 100)) : 0) + '%';
+  $('barWrap').className = 'bar' + (remaining < 0 ? ' neg' : '');
+  renderItemList();
+}
+
+function renderItemList() {
+  const q = searchQuery.toLowerCase();
+  const list = items.filter(i => {
+    const m = i.judul.toLowerCase().includes(q) || (i.ket || '').toLowerCase().includes(q);
+    return activeFilter === 'paid' ? m && i.checked : activeFilter === 'unpaid' ? m && !i.checked : m;
+  });
+  if (!list.length) {
+    $('paymentList').innerHTML = `<div class="empty">${icon('receipt')}<b>Tidak Ada Pembayaran</b>Tekan tombol (+) untuk menambahkan catatan baru.</div>`;
+    return;
+  }
+  $('paymentList').innerHTML = list.map(i => `
+    <div class="row" data-id="${i.id}">
+      <input type="checkbox" class="cb" ${i.checked ? 'checked' : ''} onchange="toggleCheck(${i.id})">
+      <div class="card ${i.checked ? 'done' : ''}" onclick="openEditModal(${i.id})" title="Klik untuk edit">
+        <div class="info"><h4>${escapeHtml(i.judul)}</h4><p>${escapeHtml(i.ket || 'Tanpa keterangan')}</p></div>
+        <div class="right"><span class="amt">${formatRupiah(i.amount)}</span>
+          <button class="del" onclick="event.stopPropagation();deleteItem(${i.id})" title="Hapus">${icon('trash')}</button></div>
+      </div>
+      <div class="grip" title="Tahan & geser untuk mengubah urutan">
+        <svg width="16" height="22" viewBox="0 0 14 18" fill="currentColor"><circle cx="4" cy="3" r="1.6"/><circle cx="10" cy="3" r="1.6"/><circle cx="4" cy="9" r="1.6"/><circle cx="10" cy="9" r="1.6"/><circle cx="4" cy="15" r="1.6"/><circle cx="10" cy="15" r="1.6"/></svg>
+      </div>
+    </div>`).join('');
+}
+
+function toggleCheck(id) { const i = items.find(x => x.id === id); if (i) { i.checked = !i.checked; saveLocalStorage(); updateAll(); } }
+function selectAll(s) { items.forEach(i => i.checked = s); saveLocalStorage(); updateAll(); showToast(s ? 'Semua item dicentang' : 'Semua centang dibatalkan'); }
+function handleSearch() { searchQuery = $('searchInput').value; renderItemList(); }
+function setFilter(f) {
+  activeFilter = f;
+  ['all', 'unpaid', 'paid'].forEach(k => $('filter' + k[0].toUpperCase() + k.slice(1)).className = k === f ? 'on' : '');
+  renderItemList();
+}
+
+function handleAddPayment(e) {
+  e.preventDefault();
+  const judul = $('inputJudul').value.trim(), amount = parseFloat($('inputNominal').value), ket = $('inputKet').value.trim();
+  if (!judul || isNaN(amount) || amount <= 0) return;
+  if (editingId !== null) {
+    const t = items.find(i => i.id === editingId);
+    if (t) { t.judul = judul; t.amount = amount; t.ket = ket; }
+    saveLocalStorage(); updateAll(); closeAddModal(); showToast('Perubahan disimpan!'); return;
+  }
+  items.unshift({ id: Date.now(), judul, amount, ket, checked: true });
+  saveLocalStorage(); updateAll(); closeAddModal(); showToast('Item pembayaran berhasil ditambahkan!');
+}
+function deleteItem(id) { items = items.filter(i => i.id !== id); saveLocalStorage(); updateAll(); showToast('Item dihapus dari catatan'); }
+
+function openModal(id) { const m = $(id); m.classList.add('show'); requestAnimationFrame(() => requestAnimationFrame(() => m.classList.add('open'))); }
+function closeModal(id) { const m = $(id); m.classList.remove('open'); setTimeout(() => m.classList.remove('show'), 280); }
+function setModalMode(edit) {
+  $('modalTitle').textContent = edit ? 'Edit Pembayaran' : 'Tambah Pembayaran';
+  $('modalHint').textContent = edit ? 'Ubah judul, nominal, atau keterangan item ini.' : 'Catat tagihan baru, otomatis dipotong dari jumlah uang.';
+  $('modalSubmitLabel').textContent = edit ? 'Simpan Perubahan' : 'Simpan Item';
+}
+function openAddModal() {
+  editingId = null; ['inputJudul', 'inputNominal', 'inputKet'].forEach(k => $(k).value = '');
+  setModalMode(false); openModal('addModal');
+}
+function openEditModal(id) {
+  const i = items.find(x => x.id === id); if (!i) return;
+  editingId = id; $('inputJudul').value = i.judul; $('inputNominal').value = i.amount; $('inputKet').value = i.ket || '';
+  setModalMode(true); openModal('addModal');
+}
+function closeAddModal() { closeModal('addModal'); setTimeout(() => editingId = null, 300); }
+function openBudgetModal() { $('inputTotalBudget').value = totalBudget; openModal('budgetModal'); }
+function closeBudgetModal() { closeModal('budgetModal'); }
+function handleSaveBudget(e) {
+  e.preventDefault();
+  const v = parseFloat($('inputTotalBudget').value);
+  if (!isNaN(v) && v >= 0) { totalBudget = v; saveLocalStorage(); updateAll(); closeBudgetModal(); showToast('Saldo awal diperbarui!'); }
+}
+
+let toastT;
+function showToast(msg) {
+  $('toastMsg').textContent = msg; $('toast').classList.add('show');
+  clearTimeout(toastT); toastT = setTimeout(() => $('toast').classList.remove('show'), 2400);
+}
+
+// Drag & drop urutan (handle di kanan, tanpa library)
+function initDrag() {
+  const list = $('paymentList');
+  let row = null, grab = 0, lastY = 0;
+  const layout = () => {
+    row.style.transform = 'none';
+    const nat = row.getBoundingClientRect().top;
+    row.style.transform = `translateY(${lastY - grab - nat}px)`;
+  };
+  const update = () => {
+    layout();
+    const r = row.getBoundingClientRect(), c = r.top + r.height / 2;
+    const p = row.previousElementSibling, n = row.nextElementSibling;
+    if (p && p.dataset.id) { const pr = p.getBoundingClientRect(); if (c < pr.top + pr.height / 2) { list.insertBefore(row, p); layout(); return; } }
+    if (n && n.dataset.id) { const nr = n.getBoundingClientRect(); if (c > nr.top + nr.height / 2) { list.insertBefore(n, row); layout(); } }
+  };
+  list.addEventListener('pointerdown', e => {
+    const g = e.target.closest('.grip');
+    if (!g || (e.pointerType === 'mouse' && e.button !== 0)) return;
+    e.preventDefault();
+    row = g.closest('.row'); lastY = e.clientY; grab = e.clientY - row.getBoundingClientRect().top;
+    row.classList.add('dragging'); document.body.classList.add('drag');
+    try { g.setPointerCapture(e.pointerId); } catch (_) {}
+  });
+  list.addEventListener('pointermove', e => {
+    if (!row) return;
+    lastY = e.clientY;
+    if (e.clientY < 70) window.scrollBy(0, -14); else if (e.clientY > innerHeight - 70) window.scrollBy(0, 14);
+    update();
+  });
+  const end = () => {
+    if (!row) return;
+    row.style.transform = ''; row.classList.remove('dragging'); document.body.classList.remove('drag'); row = null;
+    const ids = [...list.querySelectorAll('[data-id]')].map(el => Number(el.dataset.id));
+    const set = new Set(ids), slots = [];
+    items.forEach((it, idx) => { if (set.has(it.id)) slots.push(idx); });
+    const by = new Map(items.map(it => [it.id, it]));
+    ids.forEach((id, k) => items[slots[k]] = by.get(id));
+    saveLocalStorage();
+  };
+  list.addEventListener('pointerup', end);
+  list.addEventListener('pointercancel', end);
+}
+</script>
+</body>
+</html>
