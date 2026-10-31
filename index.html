@@ -444,6 +444,26 @@ function showToast(msg) {
 }
 
 
+
+// Enter = simpan langsung
+function bindEnter(id, fn) {
+  const el = $(id); if (!el) return;
+  el.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); fn(); } });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  bindEnter('inputTopup', handleTopup);
+  bindEnter('svAmount', addSv);
+  bindEnter('svNote', addSv);
+  bindEnter('svDate', addSv);
+  bindEnter('svTargetInput', setTarget);
+  // Form tambah/edit: Enter di judul -> lanjut ke nominal bila masih kosong, selain itu simpan
+  bindEnter('inputJudul', () => {
+    if (!$('inputJudul').value.trim()) return;
+    if (!$('inputNominal').value) $('inputNominal').focus();
+    else $('inputNominal').form.requestSubmit();
+  });
+});
+
 // ===== Tabungan Harian =====
 let sv = { target: 0, entries: [] }, svType = 'in';
 const todayStr = () => new Date().toLocaleDateString('en-CA');
