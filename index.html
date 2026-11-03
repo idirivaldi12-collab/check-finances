@@ -139,6 +139,40 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 .he .a{font-weight:700;font-size:14px;white-space:nowrap}
 .hist .empty{padding:22px 10px;border-radius:18px;background:rgba(255,255,255,.5)}
 @media(max-width:380px){.prog{flex-direction:column;align-items:stretch}.donut{margin:0 auto}}
+
+.tp-btn{width:100%;display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-radius:16px;background:#EEF3FF;color:#3A56D4;font-weight:600;font-size:14px;transition:.2s}
+.tp-btn .cnt{min-width:26px;padding:2px 9px;border-radius:99px;background:#fff;font-size:12px;text-align:center}
+.tp-panel{display:none;max-height:190px;overflow-y:auto;margin-top:8px}.tp-panel.open{display:block}
+.tp-row{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 12px;border-radius:14px;background:#F3F6FF;margin-bottom:6px}
+.tp-row b{display:block;font-size:13px;font-weight:600}.tp-row span{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+.tp-row em{font-style:normal;font-weight:700;font-size:13px;color:#14A39A;white-space:nowrap}
+.tp-empty{text-align:center;font-size:12px;color:var(--muted);padding:14px}
+.tp-note{flex:1;min-width:0;padding:12px 14px;border-radius:16px;border:1.5px solid #E1E8FA;background:#fff;font-size:13px;outline:0}
+.tp-note:focus{border-color:var(--violet)}
+.sheet{max-height:94vh;overflow-y:auto}
+.dayh{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.dayh .mid{flex:1;min-width:0}.dayh h5{font-size:14px;font-weight:700}.dayh p{font-size:11px;color:var(--muted);margin-top:2px}
+.hrow{display:flex;align-items:center;gap:10px;padding:10px 6px 10px 12px;border-radius:14px;background:rgba(255,255,255,.7);border:1px solid #fff}
+.hrow .n{flex:1;min-width:0;font-size:14px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hrow .a{font-weight:700;font-size:14px;color:#EE7B30;white-space:nowrap}
+#histView .vwrap{padding:14px 14px 40px}
+#histView .vbar{margin-bottom:12px;gap:10px}#histView .vbar .back{width:36px;height:36px;font-size:17px}
+#histView .vbar h2{font-size:20px}#histView .vbar p{font-size:11px}
+#histView .hero{padding:14px 16px;border-radius:22px;margin-bottom:10px}
+#histView .hero .num{font-size:24px;margin-top:2px}
+#histView .hero .chips{margin-top:10px;gap:8px}
+#histView .chip{padding:7px 10px;border-radius:12px;font-size:10px}#histView .chip b{font-size:13px;margin-top:1px}
+#histView .glass{padding:14px;border-radius:22px;margin-bottom:10px}
+.hform .hf-row{display:flex;gap:8px;margin-bottom:8px}.hform .hf-row:last-child{margin-bottom:0}
+.hform input{min-width:0;width:100%;padding:11px 13px;border-radius:14px;border:1.5px solid #E1E8FA;background:#fff;font-size:13px;outline:0}
+.hform input:focus{border-color:var(--violet)}
+.hform .hf-row>input[type=date],.hform .hf-row>.rp{flex:1}
+.hform .rp span{left:12px;font-size:13px}.hform .rp input{padding-left:36px;font-weight:700;color:#3A56D4}
+.hform .btn-g{padding:0 22px;white-space:nowrap;font-size:13px}
+#histView .dayh{margin-bottom:8px;gap:10px}#histView .dayh h5{font-size:13px}
+#histView .dbadge{width:44px;padding:4px 0;border-radius:12px}#histView .dbadge b{font-size:17px}
+#histView .hist{gap:6px}#histView .hrow{padding:7px 4px 7px 12px;border-radius:12px}
+#histView .hrow .n,#histView .hrow .a{font-size:13px}
 .topup{margin-top:20px;padding-top:18px;border-top:1.5px dashed #D5DDF3}
 .topup-row{display:flex;gap:10px}.topup-row .rp{flex:1}
 .topup-row button{padding:0 20px;border-radius:99px;font-weight:600;font-size:14px;background:linear-gradient(135deg,var(--teal),#35A7F0);color:#fff;box-shadow:0 12px 22px -10px rgba(46,196,182,.9)}
@@ -219,8 +253,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
     <p class="hint" id="modalHint">Catat tagihan baru, otomatis dipotong dari jumlah uang.</p>
     <form onsubmit="handleAddPayment(event)">
       <div class="field"><label>Judul / Nama Pembayaran *</label><input id="inputJudul" required placeholder="Contoh: Judul 4"></div>
-      <div class="field"><label>Nominal (Rp) *</label><div class="rp"><span>Rp</span><input type="number" id="inputNominal" min="1" required placeholder="0"></div></div>
+      <div class="field"><label>Nominal (Rp) *</label><div class="rp"><span>Rp</span><input type="text" inputmode="numeric" autocomplete="off" data-money id="inputNominal" required placeholder="0"></div></div>
       <div class="field"><label>Keterangan / Catatan</label><input id="inputKet" placeholder="Catatan singkat (opsional)"></div>
+      <button type="button" id="histBtn" class="tp-btn" style="display:none;margin-bottom:4px" onclick="openHistory()"><span>Detail Riwayat</span><span class="cnt" id="hbCount">0</span></button>
       <div class="acts"><button type="button" class="no" onclick="closeAddModal()">Batal</button><button type="submit" class="ok" id="modalSubmitLabel">Simpan Item</button></div>
     </form>
   </div>
@@ -231,13 +266,15 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
     <div class="hd"><h3 class="serif">Atur Saldo</h3><button class="x" onclick="closeBudgetModal()"><svg class="ic"><use href="#i-x"/></svg></button></div>
     <p class="hint">Masukkan jumlah uang awal Anda. Pembayaran yang dicentang otomatis dipotong dari saldo ini.</p>
     <form onsubmit="handleSaveBudget(event)">
-      <div class="field"><label>Saldo Awal (Rp)</label><div class="rp"><span>Rp</span><input type="number" id="inputTotalBudget" min="0" required placeholder="0"></div></div>
+      <div class="field"><label>Saldo Awal (Rp)</label><div class="rp"><span>Rp</span><input type="text" inputmode="numeric" autocomplete="off" data-money id="inputTotalBudget" required placeholder="0"></div></div>
       <div class="acts"><button type="button" class="no" onclick="closeBudgetModal()">Batal</button><button type="submit" class="ok">Simpan Saldo</button></div>
     </form>
     <div class="topup">
-      <div class="field" style="margin-bottom:0"><label>Tambah Saldo (Rp)</label>
-        <div class="topup-row"><div class="rp"><span>+ Rp</span><input type="number" id="inputTopup" min="1" placeholder="0" style="padding-left:56px"></div>
-        <button type="button" class="ok" onclick="handleTopup()">Tambah</button></div></div>
+      <button type="button" id="tpBtn" class="tp-btn" onclick="toggleTopupHist()"><span>Riwayat Penambahan</span><span class="cnt" id="tpCount">0</span></button>
+      <div id="tpPanel" class="tp-panel"><div id="tpList"></div></div>
+      <div class="field" style="margin:14px 0 8px"><label>Tambah Saldo (Rp)</label>
+        <div class="rp"><span>+ Rp</span><input type="text" inputmode="numeric" autocomplete="off" data-money id="inputTopup" placeholder="0" style="padding-left:56px"></div></div>
+      <div class="topup-row"><input id="inputTopupNote" class="tp-note" placeholder="Keterangan (opsional)"><button type="button" onclick="handleTopup()">Tambah</button></div>
       <p class="hint" style="margin:8px 0 0">Nominal ini akan ditambahkan ke saldo awal yang sekarang.</p>
     </div>
   </div>
@@ -272,7 +309,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
           <div class="t">Target Tabungan</div>
           <div id="svTarget" class="v">Rp 0</div>
           <div id="svRemain" class="s">Atur target untuk melihat progres</div>
-          <div class="mini"><input type="number" id="svTargetInput" min="1" placeholder="Nominal target"><button class="btn-g" onclick="setTarget()">Atur</button></div>
+          <div class="mini"><input type="text" inputmode="numeric" autocomplete="off" data-money id="svTargetInput" placeholder="Nominal target"><button class="btn-g" onclick="setTarget()">Atur</button></div>
         </div>
       </div>
     </div>
@@ -282,7 +319,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
         <button id="segIn" class="on in" onclick="setSvType('in')"><svg class="ic"><use href="#i-down"/></svg>Uang Masuk</button>
         <button id="segOut" class="out" onclick="setSvType('out')"><svg class="ic"><use href="#i-up"/></svg>Uang Keluar</button>
       </div>
-      <div class="field"><label>Nominal (Rp)</label><div class="rp"><span>Rp</span><input type="number" id="svAmount" min="1" placeholder="0"></div></div>
+      <div class="field"><label>Nominal (Rp)</label><div class="rp"><span>Rp</span><input type="text" inputmode="numeric" autocomplete="off" data-money id="svAmount" placeholder="0"></div></div>
       <div class="two">
         <div class="field"><label>Tanggal</label><input type="date" id="svDate"></div>
         <div class="field"><label>Catatan</label><input id="svNote" placeholder="Opsional"></div>
@@ -301,10 +338,32 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
   </div>
 </div>
 
+<div id="histView" class="view">
+  <div class="vwrap">
+    <div class="vbar">
+      <button class="back" onclick="closeHistory()" aria-label="Kembali"><svg class="ic"><use href="#i-back"/></svg></button>
+      <div><h2>Detail Riwayat</h2><p id="hTitle">—</p></div>
+    </div>
+    <div class="hero">
+      <div class="lbl" id="hLbl">Saldo</div>
+      <div id="hSaldo" class="num">Rp 0</div>
+      <div class="chips">
+        <div class="chip">Terpakai<b id="hUsed">Rp 0</b></div>
+        <div class="chip">Sisa<b id="hLeft">Rp 0</b></div>
+      </div>
+    </div>
+    <div class="glass hform">
+      <div class="hf-row"><input type="date" id="hDate"><div class="rp"><span>Rp</span><input type="text" inputmode="numeric" autocomplete="off" data-money id="hAmt" placeholder="0"></div></div>
+      <div class="hf-row"><input id="hName" placeholder="Pengeluaran, mis. Makan siang"><button class="btn-g" onclick="addHist()">Simpan</button></div>
+    </div>
+    <div id="hList"></div>
+  </div>
+</div>
+
 <div id="toast"><svg class="ic"><use href="#i-check"/></svg><span id="toastMsg"></span></div>
 
 <script>
-let totalBudget = 1000000, activeFilter = 'all', searchQuery = '', editingId = null;
+let totalBudget = 0, activeFilter = 'all', searchQuery = '', editingId = null;
 let items = [
   { id: 1, judul: 'Judul 1', ket: '', amount: 100000, checked: false },
   { id: 2, judul: 'Judul 2', ket: '', amount: 200000, checked: false },
@@ -313,17 +372,17 @@ let items = [
 const $ = id => document.getElementById(id);
 const icon = n => `<svg class="ic"><use href="#i-${n}"/></svg>`;
 
-document.addEventListener('DOMContentLoaded', () => { loadLocalStorage(); loadSv(); updateAll(); initDrag(); });
+document.addEventListener('DOMContentLoaded', () => { loadLocalStorage(); loadSv(); loadTopups(); updateAll(); initDrag(); });
 
 function loadLocalStorage() {
   try {
-    const b = localStorage.getItem('payflow_v2_budget'), i = localStorage.getItem('payflow_v2_items');
+    const b = localStorage.getItem('payflow_v3_budget'), i = localStorage.getItem('payflow_v2_items');
     if (b !== null) totalBudget = parseFloat(b);
     if (i !== null) items = JSON.parse(i);
   } catch (e) {}
 }
 function saveLocalStorage() {
-  try { localStorage.setItem('payflow_v2_budget', totalBudget); localStorage.setItem('payflow_v2_items', JSON.stringify(items)); } catch (e) {}
+  try { localStorage.setItem('payflow_v3_budget', totalBudget); localStorage.setItem('payflow_v2_items', JSON.stringify(items)); } catch (e) {}
 }
 const formatRupiah = n => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(n);
 const escapeHtml = s => s.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m]));
@@ -357,7 +416,7 @@ function renderItemList() {
     <div class="row" data-id="${i.id}">
       <input type="checkbox" class="cb" ${i.checked ? 'checked' : ''} onchange="toggleCheck(${i.id})">
       <div class="card ${i.checked ? 'done' : ''}" onclick="openEditModal(${i.id})" title="Klik untuk edit">
-        <div class="info"><h4>${escapeHtml(i.judul)}</h4><p>${escapeHtml(i.ket || 'Tanpa keterangan')}</p></div>
+        <div class="info"><h4>${escapeHtml(i.judul)}</h4><p>${escapeHtml(i.ket || 'Tanpa keterangan')}${(i.history && i.history.length) ? ' · Sisa ' + formatRupiah(i.amount - i.history.reduce((t, h) => t + h.amount, 0)) : ''}</p></div>
         <div class="right"><span class="amt">${formatRupiah(i.amount)}</span>
           <button class="del" onclick="event.stopPropagation();deleteItem(${i.id})" title="Hapus">${icon('trash')}</button></div>
       </div>
@@ -392,7 +451,7 @@ function setFilter(f) {
 
 function handleAddPayment(e) {
   e.preventDefault();
-  const judul = $('inputJudul').value.trim(), amount = parseFloat($('inputNominal').value), ket = $('inputKet').value.trim();
+  const judul = $('inputJudul').value.trim(), amount = num('inputNominal'), ket = $('inputKet').value.trim();
   if (!judul || isNaN(amount) || amount <= 0) return;
   if (editingId !== null) {
     const t = items.find(i => i.id === editingId);
@@ -410,6 +469,7 @@ function setModalMode(edit) {
   $('modalTitle').textContent = edit ? 'Edit Pembayaran' : 'Tambah Pembayaran';
   $('modalHint').textContent = edit ? 'Ubah judul, nominal, atau keterangan item ini.' : 'Catat tagihan baru, otomatis dipotong dari jumlah uang.';
   $('modalSubmitLabel').textContent = edit ? 'Simpan Perubahan' : 'Simpan Item';
+  $('histBtn').style.display = edit ? 'flex' : 'none';
 }
 function openAddModal() {
   editingId = null; ['inputJudul', 'inputNominal', 'inputKet'].forEach(k => $(k).value = '');
@@ -417,24 +477,36 @@ function openAddModal() {
 }
 function openEditModal(id) {
   const i = items.find(x => x.id === id); if (!i) return;
-  editingId = id; $('inputJudul').value = i.judul; $('inputNominal').value = i.amount; $('inputKet').value = i.ket || '';
-  setModalMode(true); openModal('addModal');
+  editingId = id; $('inputJudul').value = i.judul; setMoney('inputNominal', i.amount); $('inputKet').value = i.ket || '';
+  $('hbCount').textContent = (i.history || []).length; setModalMode(true); openModal('addModal');
 }
 function closeAddModal() { closeModal('addModal'); setTimeout(() => editingId = null, 300); }
-function openBudgetModal() { $('inputTotalBudget').value = totalBudget; $('inputTopup').value = ''; openModal('budgetModal'); }
+function openBudgetModal() { setMoney('inputTotalBudget', totalBudget); $('inputTopup').value = ''; $('inputTopupNote').value = ''; renderTopups(); openModal('budgetModal'); }
 function closeBudgetModal() { closeModal('budgetModal'); }
 function handleSaveBudget(e) {
   e.preventDefault();
-  const v = parseFloat($('inputTotalBudget').value);
+  const v = num('inputTotalBudget');
   if (!isNaN(v) && v >= 0) { totalBudget = v; saveLocalStorage(); updateAll(); closeBudgetModal(); showToast('Saldo awal diperbarui!'); }
 }
 
+let topups = [];
+function loadTopups() { try { const r = localStorage.getItem('payflow_v2_topups'); if (r) topups = JSON.parse(r); } catch (e) {} }
+function saveTopups() { try { localStorage.setItem('payflow_v2_topups', JSON.stringify(topups)); } catch (e) {} }
+const fmtDateTime = ts => { const d = new Date(ts); return d.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) + ', ' + d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }); };
+function toggleTopupHist() { $('tpPanel').classList.toggle('open'); $('tpBtn').classList.toggle('open'); }
+function renderTopups() {
+  $('tpCount').textContent = topups.length;
+  const list = [...topups].sort((a, b) => b.ts - a.ts);
+  $('tpList').innerHTML = list.length ? list.map(t => `<div class="tp-row"><div><b>${escapeHtml(t.ket || 'Tambah saldo')}</b><span>${fmtDateTime(t.ts)}</span></div><em>+ ${formatRupiah(t.amount)}</em></div>`).join('') : '<div class="tp-empty">Belum ada riwayat penambahan</div>';
+}
 function handleTopup() {
-  const v = parseFloat($('inputTopup').value);
+  const v = num('inputTopup'), ket = $('inputTopupNote').value.trim();
   if (isNaN(v) || v <= 0) { $('inputTopup').focus(); return; }
-  totalBudget += v; saveLocalStorage(); updateAll();
-  $('inputTotalBudget').value = totalBudget; $('inputTopup').value = '';
-  closeBudgetModal(); showToast('Saldo ditambah ' + formatRupiah(v));
+  topups.push({ id: Date.now(), ts: Date.now(), amount: v, ket });
+  totalBudget += v; saveTopups(); saveLocalStorage(); updateAll(); renderTopups();
+  setMoney('inputTotalBudget', totalBudget); $('inputTopup').value = ''; $('inputTopupNote').value = '';
+  $('tpPanel').classList.add('open'); $('tpBtn').classList.add('open');
+  showToast('Saldo ditambah ' + formatRupiah(v));
 }
 
 let toastT;
@@ -445,6 +517,23 @@ function showToast(msg) {
 
 
 
+
+// ===== Format nominal (titik ribuan) =====
+const num = id => { const d = ($(id).value || '').replace(/\D/g, ''); return d ? parseInt(d, 10) : NaN; };
+const fmtNum = n => new Intl.NumberFormat('id-ID').format(n);
+const setMoney = (id, n) => { $(id).value = (n === '' || n == null || isNaN(n)) ? '' : fmtNum(n); };
+document.addEventListener('input', e => {
+  const el = e.target;
+  if (!el.matches || !el.matches('[data-money]')) return;
+  const pos = el.selectionStart, raw = el.value;
+  const before = raw.slice(0, pos).replace(/\D/g, '').length;
+  const digits = raw.replace(/\D/g, '').replace(/^0+(?=\d)/, '').slice(0, 15);
+  el.value = digits ? fmtNum(parseInt(digits, 10)) : '';
+  let c = 0, p = 0;
+  while (p < el.value.length && c < before) { if (/\d/.test(el.value[p])) c++; p++; }
+  try { el.setSelectionRange(p, p); } catch (_) {}
+});
+
 // Enter = simpan langsung
 function bindEnter(id, fn) {
   const el = $(id); if (!el) return;
@@ -452,6 +541,8 @@ function bindEnter(id, fn) {
 }
 document.addEventListener('DOMContentLoaded', () => {
   bindEnter('inputTopup', handleTopup);
+  bindEnter('inputTopupNote', handleTopup);
+  bindEnter('hName', addHist); bindEnter('hAmt', addHist); bindEnter('hDate', addHist);
   bindEnter('svAmount', addSv);
   bindEnter('svNote', addSv);
   bindEnter('svDate', addSv);
@@ -473,7 +564,7 @@ function loadSv() { try { const r = localStorage.getItem('payflow_v2_savings'); 
 function saveSv() { try { localStorage.setItem('payflow_v2_savings', JSON.stringify(sv)); } catch (e) {} }
 
 function openSavings() {
-  $('svDate').value = todayStr(); $('svTargetInput').value = sv.target || '';
+  $('svDate').value = todayStr(); setMoney('svTargetInput', sv.target || '');
   $('svToday').textContent = fmtFull(todayStr());
   renderSavings();
   const v = $('savingsView'); v.classList.add('show'); document.body.style.overflow = 'hidden';
@@ -484,7 +575,7 @@ function closeSavings() {
   const v = $('savingsView'); v.classList.remove('open'); document.body.style.overflow = '';
   setTimeout(() => v.classList.remove('show'), 260);
 }
-document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('savingsView').classList.contains('show')) closeSavings(); });
+document.addEventListener('keydown', e => { if (e.key !== 'Escape') return; if ($('histView').classList.contains('show')) closeHistory(); else if ($('savingsView').classList.contains('show')) closeSavings(); });
 
 function setSvType(t) {
   svType = t;
@@ -492,7 +583,7 @@ function setSvType(t) {
   $('segOut').className = t === 'out' ? 'on out' : 'out';
 }
 function addSv() {
-  const amount = parseFloat($('svAmount').value), date = $('svDate').value || todayStr(), ket = $('svNote').value.trim();
+  const amount = num('svAmount'), date = $('svDate').value || todayStr(), ket = $('svNote').value.trim();
   if (isNaN(amount) || amount <= 0) { $('svAmount').focus(); return; }
   sv.entries.push({ id: Date.now(), type: svType, amount, date, ket });
   saveSv(); $('svAmount').value = ''; $('svNote').value = ''; renderSavings();
@@ -500,7 +591,7 @@ function addSv() {
 }
 function delSv(id) { sv.entries = sv.entries.filter(e => e.id !== id); saveSv(); renderSavings(); showToast('Transaksi dihapus'); }
 function setTarget() {
-  const v = parseFloat($('svTargetInput').value);
+  const v = num('svTargetInput');
   if (isNaN(v) || v <= 0) { $('svTargetInput').focus(); return; }
   sv.target = v; saveSv(); renderSavings(); showToast('Target diperbarui!');
 }
@@ -533,6 +624,58 @@ function renderSavings() {
   $('svTarget').textContent = formatRupiah(sv.target || 0);
   $('svRemain').textContent = sv.target <= 0 ? 'Atur target untuk melihat progres'
     : saving >= sv.target ? 'Target tercapai!' : 'Kurang ' + formatRupiah(sv.target - saving) + ' lagi';
+}
+
+
+// ===== Detail Riwayat per item =====
+let histId = null;
+const curItem = () => items.find(i => i.id === histId);
+function openHistory() {
+  if (editingId === null) return;
+  histId = editingId; closeAddModal();
+  $('hDate').value = todayStr(); $('hName').value = ''; $('hAmt').value = '';
+  renderHist();
+  const v = $('histView'); v.classList.add('show'); document.body.style.overflow = 'hidden';
+  requestAnimationFrame(() => requestAnimationFrame(() => v.classList.add('open'))); v.scrollTop = 0;
+}
+function closeHistory() {
+  const v = $('histView'); v.classList.remove('open'); document.body.style.overflow = '';
+  setTimeout(() => v.classList.remove('show'), 260);
+  histId = null; saveLocalStorage(); renderItemList();
+}
+const histUsed = it => (it.history || []).reduce((t, h) => t + h.amount, 0);
+function addHist() {
+  const it = curItem(); if (!it) return;
+  const name = $('hName').value.trim(), amt = num('hAmt'), date = $('hDate').value || todayStr();
+  if (!name) { $('hName').focus(); return; }
+  if (isNaN(amt) || amt <= 0) { $('hAmt').focus(); return; }
+  const left = it.amount - histUsed(it);
+  if (amt > left) { showToast('Melebihi sisa saldo (' + formatRupiah(Math.max(0, left)) + ')'); return; }
+  (it.history = it.history || []).push({ id: Date.now(), date, name, amount: amt });
+  saveLocalStorage(); $('hName').value = ''; $('hAmt').value = ''; renderHist(); $('hName').focus();
+  showToast('Pengeluaran dicatat');
+}
+function delHist(id) {
+  const it = curItem(); if (!it) return;
+  it.history = (it.history || []).filter(h => h.id !== id);
+  saveLocalStorage(); renderHist(); showToast('Pengeluaran dihapus');
+}
+function renderHist() {
+  const it = curItem(); if (!it) return;
+  const used = histUsed(it), left = it.amount - used;
+  $('hTitle').textContent = it.judul; $('hLbl').textContent = 'Saldo ' + it.judul;
+  $('hSaldo').textContent = formatRupiah(it.amount); $('hUsed').textContent = formatRupiah(used); $('hLeft').textContent = formatRupiah(left);
+  const by = {}; (it.history || []).forEach(h => (by[h.date] = by[h.date] || []).push(h));
+  const dates = Object.keys(by).sort((a, b) => b.localeCompare(a));
+  if (!dates.length) { $('hList').innerHTML = '<div class="glass"><div class="empty" style="background:none;border:0;padding:20px 0">Belum ada pengeluaran. Tambahkan tanggal dan pengeluaran di atas.</div></div>'; return; }
+  $('hList').innerHTML = dates.map(d => {
+    const dt = toDate(d), list = by[d].slice().sort((a, b) => b.id - a.id), tot = list.reduce((t, h) => t + h.amount, 0);
+    return `<div class="glass">
+      <div class="dayh"><div class="dbadge out"><small>${dt.toLocaleDateString('id-ID', { weekday: 'short' })}</small><b>${dt.getDate()}</b><small>${dt.toLocaleDateString('id-ID', { month: 'short' })}</small></div>
+        <div class="mid"><h5>${fmtFull(d)}</h5><p>${list.length} pengeluaran</p></div><span class="a out-c" style="font-weight:700;font-size:14px">− ${formatRupiah(tot)}</span></div>
+      <div class="hist">${list.map(h => `<div class="hrow"><span class="n">${escapeHtml(h.name)}</span><span class="a">− ${formatRupiah(h.amount)}</span><button class="del" onclick="delHist(${h.id})" title="Hapus">${icon('trash')}</button></div>`).join('')}</div>
+    </div>`;
+  }).join('');
 }
 
 // Drag & drop urutan (handle di kanan, tanpa library)
