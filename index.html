@@ -173,6 +173,41 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 #histView .dbadge{width:44px;padding:4px 0;border-radius:12px}#histView .dbadge b{font-size:17px}
 #histView .hist{gap:6px}#histView .hrow{padding:7px 4px 7px 12px;border-radius:12px}
 #histView .hrow .n,#histView .hrow .a{font-size:13px}
+
+.hbtns{display:flex;gap:8px;align-items:center}
+.btn-soft.ico{width:42px;height:42px;padding:0;justify-content:center;position:relative;font-size:18px}
+.btn-soft.ico.on::after{content:"";position:absolute;top:7px;right:7px;width:9px;height:9px;border-radius:50%;background:var(--mint);border:2px solid #fff}
+.menu-card{width:100%;display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:22px;background:var(--glass);border:1px solid #fff;backdrop-filter:blur(12px);text-align:left;margin:-10px 0 20px;box-shadow:0 12px 26px -14px rgba(79,110,247,.45);transition:.2s}
+.menu-card:active{transform:scale(.98)}.menu-card:hover{transform:translateY(-2px)}
+.mc-ic{width:44px;height:44px;border-radius:15px;background:linear-gradient(135deg,#FFA45C,#EE7B30);color:#fff;display:grid;place-items:center;font-size:22px;flex-shrink:0;box-shadow:0 8px 16px -8px rgba(238,123,48,.8)}
+.mc-t{flex:1;min-width:0}.mc-t b{display:block;font-size:15px;font-weight:600}.mc-t small{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+.mc-ch{color:var(--muted);font-size:20px}
+.pn-pane{display:none}.pn-pane.on{display:block}
+.pn-err{font-size:12px;color:#D8651C;font-weight:600;margin-top:10px;min-height:0}
+.pin-in{letter-spacing:.35em;font-weight:700}
+.locked .wrap,.locked .fab{visibility:hidden}
+#lockScreen{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;overflow-y:auto;background:linear-gradient(160deg,#E2ECFF 0%,#E4F6F4 55%,#EEF1FF 100%)}
+.locked #lockScreen,#lockScreen.show{display:flex}
+.lk{width:100%;max-width:320px;padding:24px 20px;text-align:center}
+.lk-logo{width:60px;height:60px;margin:0 auto 12px;border-radius:20px;background:linear-gradient(135deg,var(--violet),var(--teal));color:#fff;display:grid;place-items:center;font-size:28px;box-shadow:0 14px 26px -8px rgba(79,110,247,.6)}
+.lk h2{font-size:24px;font-weight:700;margin-bottom:16px}
+.lmsg{font-size:13px;color:var(--muted);margin-bottom:16px;min-height:18px}.lmsg.err{color:#D8651C;font-weight:600}
+.dots{display:flex;justify-content:center;gap:14px;margin-bottom:26px}
+.dots i{width:14px;height:14px;border-radius:50%;border:2px solid #A9B8EA;transition:.15s}
+.dots i.f{background:var(--violet);border-color:var(--violet);transform:scale(1.1)}
+.dots.shake{animation:shk .4s}
+@keyframes shk{0%,100%{transform:none}20%,60%{transform:translateX(-9px)}40%,80%{transform:translateX(9px)}}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;justify-items:center}
+.keypad button{width:68px;height:68px;border-radius:50%;background:var(--glass);border:1px solid #fff;font-size:24px;font-weight:600;display:grid;place-items:center;box-shadow:0 8px 18px -10px rgba(79,110,247,.5);transition:.12s}
+.keypad button:active{transform:scale(.9);background:#fff}.keypad .ic{font-size:24px;color:var(--muted)}
+.keypad.off{opacity:.4;pointer-events:none}
+.forgot{margin-top:22px;font-size:13px;font-weight:600;color:var(--violet);padding:8px 14px}
+.lq{font-size:15px;font-weight:600;margin-bottom:12px}
+.lin{width:100%;padding:13px 16px;border-radius:16px;border:1.5px solid #E1E8FA;background:#fff;font-size:14px;outline:0;margin-bottom:10px;text-align:center}
+.lin:focus{border-color:var(--violet)}
+.lerr{font-size:12px;color:#D8651C;font-weight:600;min-height:16px;margin-bottom:10px}
+.lbtn{width:100%;padding:14px;font-size:14px}
+.lbtn:disabled{opacity:.5;pointer-events:none}.lin:disabled{opacity:.6}
 .topup{margin-top:20px;padding-top:18px;border-top:1.5px dashed #D5DDF3}
 .topup-row{display:flex;gap:10px}.topup-row .rp{flex:1}
 .topup-row button{padding:0 20px;border-radius:99px;font-weight:600;font-size:14px;background:linear-gradient(135deg,var(--teal),#35A7F0);color:#fff;box-shadow:0 12px 22px -10px rgba(46,196,182,.9)}
@@ -182,8 +217,12 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </style>
 </head>
 <body>
+<script>try{if(localStorage.getItem('payflow_pin'))document.documentElement.classList.add('locked')}catch(e){}</script>
 <svg width="0" height="0" style="position:absolute"><defs>
 <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M19 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0 0 4h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5"/><path d="M17 13.5h.01"/></symbol>
+<symbol id="i-chevr" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+<symbol id="i-bs" viewBox="0 0 24 24"><path d="M21 4H8l-6 8 6 8h13a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1zM17 9l-6 6M11 9l6 6"/></symbol>
 <symbol id="i-back" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
 <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></symbol>
 <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14M19 12l-7 7-7-7"/></symbol>
@@ -205,7 +244,10 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
     <div class="logo" id="logoBtn" onclick="openSavings()"><svg class="ic"><use href="#i-wallet"/></svg></div>
     <div><h1 class="serif">PayFlow</h1><p>Catatan & Manajemen Keuangan</p></div>
   </div>
-  <button class="btn-soft" onclick="openBudgetModal()"><svg class="ic"><use href="#i-sliders"/></svg>Atur Saldo</button>
+  <div class="hbtns">
+    <button class="btn-soft ico" id="lockBtn" onclick="openPinModal()" aria-label="Kunci PIN"><svg class="ic"><use href="#i-lock"/></svg></button>
+    <button class="btn-soft" onclick="openBudgetModal()"><svg class="ic"><use href="#i-sliders"/></svg>Atur Saldo</button>
+  </div>
 </header>
 
 <div class="stats">
@@ -213,7 +255,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
     <div>
       <div class="lbl">Jumlah Uang</div>
       <div id="totalBudgetDisplay" class="num serif">Rp 0</div>
-      <div class="sub">Setelah dipotong pembayaran</div>
+      <div class="sub">Setelah dipotong pembayaran &amp; pengeluaran harian</div>
     </div>
     <div>
       <div class="row2"><span style="opacity:.7">Saldo awal</span><b id="initialBudgetDisplay">Rp 0</b></div>
@@ -229,6 +271,12 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
     <div><span class="pill" id="checkedCountDisplay">0 / 0 Item</span></div>
   </div>
 </div>
+
+<button class="menu-card" onclick="openDaily()">
+  <span class="mc-ic"><svg class="ic"><use href="#i-receipt"/></svg></span>
+  <span class="mc-t"><b>Pengeluaran Sehari-hari</b><small id="dailySub">Hari ini Rp 0 · Total Rp 0</small></span>
+  <svg class="ic mc-ch"><use href="#i-chevr"/></svg>
+</button>
 
 <div class="tools">
   <div class="search"><svg class="ic"><use href="#i-search"/></svg><input id="searchInput" oninput="handleSearch()" placeholder="Cari pembayaran..."></div>
@@ -255,7 +303,6 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
       <div class="field"><label>Judul / Nama Pembayaran *</label><input id="inputJudul" required placeholder="Contoh: Judul 4"></div>
       <div class="field"><label>Nominal (Rp) *</label><div class="rp"><span>Rp</span><input type="text" inputmode="numeric" autocomplete="off" data-money id="inputNominal" required placeholder="0"></div></div>
       <div class="field"><label>Keterangan / Catatan</label><input id="inputKet" placeholder="Catatan singkat (opsional)"></div>
-      <button type="button" id="histBtn" class="tp-btn" style="display:none;margin-bottom:4px" onclick="openHistory()"><span>Detail Riwayat</span><span class="cnt" id="hbCount">0</span></button>
       <div class="acts"><button type="button" class="no" onclick="closeAddModal()">Batal</button><button type="submit" class="ok" id="modalSubmitLabel">Simpan Item</button></div>
     </form>
   </div>
@@ -341,22 +388,90 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div id="histView" class="view">
   <div class="vwrap">
     <div class="vbar">
-      <button class="back" onclick="closeHistory()" aria-label="Kembali"><svg class="ic"><use href="#i-back"/></svg></button>
-      <div><h2>Detail Riwayat</h2><p id="hTitle">—</p></div>
+      <button class="back" onclick="closeDaily()" aria-label="Kembali"><svg class="ic"><use href="#i-back"/></svg></button>
+      <div><h2>Pengeluaran Sehari-hari</h2><p id="hTitle">Mengambil dari total saldo</p></div>
     </div>
     <div class="hero">
       <div class="lbl" id="hLbl">Saldo</div>
       <div id="hSaldo" class="num">Rp 0</div>
       <div class="chips">
-        <div class="chip">Terpakai<b id="hUsed">Rp 0</b></div>
-        <div class="chip">Sisa<b id="hLeft">Rp 0</b></div>
+        <div class="chip">Hari ini<b id="hUsed">Rp 0</b></div>
+        <div class="chip">Total pengeluaran<b id="hLeft">Rp 0</b></div>
       </div>
     </div>
     <div class="glass hform">
       <div class="hf-row"><input type="date" id="hDate"><div class="rp"><span>Rp</span><input type="text" inputmode="numeric" autocomplete="off" data-money id="hAmt" placeholder="0"></div></div>
-      <div class="hf-row"><input id="hName" placeholder="Pengeluaran, mis. Makan siang"><button class="btn-g" onclick="addHist()">Simpan</button></div>
+      <div class="hf-row"><input id="hName" placeholder="Pengeluaran, mis. Makan siang"><button class="btn-g" onclick="addDaily()">Simpan</button></div>
     </div>
     <div id="hList"></div>
+  </div>
+</div>
+
+<div id="lockScreen">
+  <div class="lk">
+    <div class="lk-logo"><svg class="ic"><use href="#i-lock"/></svg></div>
+    <h2>PayFlow</h2>
+    <div id="lkPin">
+      <p id="lockMsg" class="lmsg">Masukkan PIN Anda</p>
+      <div class="dots" id="dots"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="keypad" id="keypad"><button onclick="keyPress('1')">1</button><button onclick="keyPress('2')">2</button><button onclick="keyPress('3')">3</button><button onclick="keyPress('4')">4</button><button onclick="keyPress('5')">5</button><button onclick="keyPress('6')">6</button><button onclick="keyPress('7')">7</button><button onclick="keyPress('8')">8</button><button onclick="keyPress('9')">9</button><span></span><button onclick="keyPress('0')">0</button><button onclick="keyPress('bs')" aria-label="Hapus"><svg class="ic"><use href="#i-bs"/></svg></button></div>
+      <button id="forgotBtn" class="forgot" style="display:none" onclick="openForgot()">Lupa PIN?</button>
+    </div>
+    <div id="lkForgot" style="display:none">
+      <p class="lmsg">Jawab pertanyaan keamanan</p>
+      <p id="lfQ" class="lq"></p>
+      <input id="lfAns" class="lin" placeholder="Jawaban Anda" autocomplete="off">
+      <p id="lfErr" class="lerr"></p>
+      <button class="btn-g lbtn" id="lfBtn" onclick="verifyAnswer()">Verifikasi</button>
+      <button class="forgot" onclick="backToPin()">Kembali</button>
+    </div>
+    <div id="lkReset" style="display:none">
+      <p class="lmsg">Buat PIN baru (6 angka)</p>
+      <input type="password" inputmode="numeric" maxlength="6" autocomplete="new-password" class="lin pin-in" id="lrNew" placeholder="PIN baru">
+      <input type="password" inputmode="numeric" maxlength="6" autocomplete="new-password" class="lin pin-in" id="lrNew2" placeholder="Ulangi PIN">
+      <p id="lrErr" class="lerr"></p>
+      <button class="btn-g lbtn" onclick="saveResetPin()">Simpan PIN</button>
+    </div>
+  </div>
+</div>
+
+<div id="pinModal" class="modal" onclick="if(event.target===this)closeModal('pinModal')">
+  <div class="sheet">
+    <div class="hd"><h3 id="pnTitle" class="serif">Kunci PIN</h3><button class="x" onclick="closeModal('pinModal')"><svg class="ic"><use href="#i-x"/></svg></button></div>
+    <p class="hint" id="pnHint"></p>
+    <div class="pn-pane" id="pn-create">
+      <div class="field"><label>PIN Baru (6 angka)</label><input type="password" inputmode="numeric" maxlength="6" autocomplete="new-password" class="pin-in" id="pnNew"></div>
+      <div class="field"><label>Ulangi PIN</label><input type="password" inputmode="numeric" maxlength="6" autocomplete="new-password" class="pin-in" id="pnNew2"></div>
+      <div class="acts"><button type="button" class="no" onclick="closeModal('pinModal')">Batal</button><button type="button" class="ok pn-go" onclick="pnNext()">Lanjut</button></div>
+    </div>
+    <div class="pn-pane" id="pn-q">
+      <div class="field"><label>Pertanyaan Keamanan</label><input id="pnQ" placeholder="Contoh: Siapa nama guru Anda?" autocomplete="off"></div>
+      <div class="field"><label>Jawaban</label><input id="pnA" placeholder="Jawaban Anda" autocomplete="off"></div>
+      <div class="acts"><button type="button" class="no" onclick="setPnPane('create')">Kembali</button><button type="button" class="ok pn-go" onclick="pnSaveNew()">Simpan & Aktifkan</button></div>
+    </div>
+    <div class="pn-pane" id="pn-menu">
+      <button type="button" class="tp-btn" style="margin-bottom:8px" onclick="closeModal('pinModal');showLock()"><span>Kunci Sekarang</span></button>
+      <button type="button" class="tp-btn" style="margin-bottom:8px" onclick="setPnPane('change')"><span>Ubah PIN</span></button>
+      <button type="button" class="tp-btn" style="margin-bottom:8px" onclick="setPnPane('editq')"><span>Ubah Pertanyaan Keamanan</span></button>
+      <button type="button" class="tp-btn" style="background:#FFF0E3;color:#D8651C" onclick="setPnPane('off')"><span>Matikan PIN</span></button>
+    </div>
+    <div class="pn-pane" id="pn-change">
+      <div class="field"><label>PIN Lama</label><input type="password" inputmode="numeric" maxlength="6" class="pin-in" id="chOld"></div>
+      <div class="field"><label>PIN Baru</label><input type="password" inputmode="numeric" maxlength="6" autocomplete="new-password" class="pin-in" id="chNew"></div>
+      <div class="field"><label>Ulangi PIN Baru</label><input type="password" inputmode="numeric" maxlength="6" autocomplete="new-password" class="pin-in" id="chNew2"></div>
+      <div class="acts"><button type="button" class="no" onclick="setPnPane('menu')">Kembali</button><button type="button" class="ok pn-go" onclick="pnChange()">Simpan</button></div>
+    </div>
+    <div class="pn-pane" id="pn-editq">
+      <div class="field"><label>PIN Saat Ini</label><input type="password" inputmode="numeric" maxlength="6" class="pin-in" id="eqPin"></div>
+      <div class="field"><label>Pertanyaan Baru</label><input id="eqQ" autocomplete="off"></div>
+      <div class="field"><label>Jawaban Baru</label><input id="eqA" autocomplete="off"></div>
+      <div class="acts"><button type="button" class="no" onclick="setPnPane('menu')">Kembali</button><button type="button" class="ok pn-go" onclick="pnEditQ()">Simpan</button></div>
+    </div>
+    <div class="pn-pane" id="pn-off">
+      <div class="field"><label>Masukkan PIN untuk mematikan</label><input type="password" inputmode="numeric" maxlength="6" class="pin-in" id="offPin"></div>
+      <div class="acts"><button type="button" class="no" onclick="setPnPane('menu')">Kembali</button><button type="button" class="ok pn-go" onclick="pnOff()">Matikan PIN</button></div>
+    </div>
+    <p id="pnErr" class="pn-err"></p>
   </div>
 </div>
 
@@ -372,7 +487,7 @@ let items = [
 const $ = id => document.getElementById(id);
 const icon = n => `<svg class="ic"><use href="#i-${n}"/></svg>`;
 
-document.addEventListener('DOMContentLoaded', () => { loadLocalStorage(); loadSv(); loadTopups(); updateAll(); initDrag(); });
+document.addEventListener('DOMContentLoaded', () => { loadLocalStorage(); loadSv(); loadTopups(); loadDaily(); updateAll(); initDrag(); initPin(); });
 
 function loadLocalStorage() {
   try {
@@ -390,12 +505,13 @@ const escapeHtml = s => s.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;',
 function updateAll() {
   const paid = items.filter(i => i.checked);
   const totalPayment = paid.reduce((s, i) => s + i.amount, 0);
-  const remaining = totalBudget - totalPayment;
+  const remaining = calcRemaining();
   const el = $('totalBudgetDisplay');
   el.textContent = formatRupiah(remaining);
   el.className = 'num serif' + (remaining < 0 ? ' neg' : '');
   $('initialBudgetDisplay').textContent = formatRupiah(totalBudget);
   $('totalPaymentDisplay').textContent = formatRupiah(totalPayment);
+  $('dailySub').textContent = 'Hari ini ' + formatRupiah(dailyOn(todayStr())) + ' · Total ' + formatRupiah(dailyTotal());
   $('checkedCountDisplay').textContent = `${paid.length} / ${items.length} Item`;
   $('budgetProgressBar').style.width = (totalBudget > 0 ? Math.max(0, Math.min(100, remaining / totalBudget * 100)) : 0) + '%';
   $('barWrap').className = 'bar' + (remaining < 0 ? ' neg' : '');
@@ -416,7 +532,7 @@ function renderItemList() {
     <div class="row" data-id="${i.id}">
       <input type="checkbox" class="cb" ${i.checked ? 'checked' : ''} onchange="toggleCheck(${i.id})">
       <div class="card ${i.checked ? 'done' : ''}" onclick="openEditModal(${i.id})" title="Klik untuk edit">
-        <div class="info"><h4>${escapeHtml(i.judul)}</h4><p>${escapeHtml(i.ket || 'Tanpa keterangan')}${(i.history && i.history.length) ? ' · Sisa ' + formatRupiah(i.amount - i.history.reduce((t, h) => t + h.amount, 0)) : ''}</p></div>
+        <div class="info"><h4>${escapeHtml(i.judul)}</h4><p>${escapeHtml(i.ket || 'Tanpa keterangan')}</p></div>
         <div class="right"><span class="amt">${formatRupiah(i.amount)}</span>
           <button class="del" onclick="event.stopPropagation();deleteItem(${i.id})" title="Hapus">${icon('trash')}</button></div>
       </div>
@@ -430,15 +546,8 @@ function toggleCheck(id) {
   const idx = items.findIndex(x => x.id === id); if (idx < 0) return;
   const it = items.splice(idx, 1)[0];
   it.checked = !it.checked;
-  if (it.checked) {
-    it.from = idx;            // ingat posisi awal
-    items.push(it);           // dicentang -> turun ke paling bawah
-  } else {
-    const unchecked = items.filter(x => !x.checked).length;
-    const pos = Math.min(typeof it.from === 'number' ? it.from : 0, unchecked);
-    items.splice(pos, 0, it); // batal centang -> kembali ke posisi awal
-    delete it.from;
-  }
+  if (it.checked) items.push(it);   // dicentang -> paling bawah
+  else items.unshift(it);           // batal centang -> selalu kembali ke paling atas
   saveLocalStorage(); updateAll();
 }
 function selectAll(s) { items.forEach(i => i.checked = s); saveLocalStorage(); updateAll(); showToast(s ? 'Semua item dicentang' : 'Semua centang dibatalkan'); }
@@ -458,7 +567,8 @@ function handleAddPayment(e) {
     if (t) { t.judul = judul; t.amount = amount; t.ket = ket; }
     saveLocalStorage(); updateAll(); closeAddModal(); showToast('Perubahan disimpan!'); return;
   }
-  items.push({ id: Date.now(), judul, amount, ket, checked: false });
+  let pos = 0; items.forEach((x, k) => { if (!x.checked) pos = k + 1; });
+  items.splice(pos, 0, { id: Date.now(), judul, amount, ket, checked: false }); // item baru di atas list yang sudah dicentang
   saveLocalStorage(); updateAll(); closeAddModal(); showToast('Item pembayaran berhasil ditambahkan!');
 }
 function deleteItem(id) { items = items.filter(i => i.id !== id); saveLocalStorage(); updateAll(); showToast('Item dihapus dari catatan'); }
@@ -469,7 +579,6 @@ function setModalMode(edit) {
   $('modalTitle').textContent = edit ? 'Edit Pembayaran' : 'Tambah Pembayaran';
   $('modalHint').textContent = edit ? 'Ubah judul, nominal, atau keterangan item ini.' : 'Catat tagihan baru, otomatis dipotong dari jumlah uang.';
   $('modalSubmitLabel').textContent = edit ? 'Simpan Perubahan' : 'Simpan Item';
-  $('histBtn').style.display = edit ? 'flex' : 'none';
 }
 function openAddModal() {
   editingId = null; ['inputJudul', 'inputNominal', 'inputKet'].forEach(k => $(k).value = '');
@@ -478,7 +587,7 @@ function openAddModal() {
 function openEditModal(id) {
   const i = items.find(x => x.id === id); if (!i) return;
   editingId = id; $('inputJudul').value = i.judul; setMoney('inputNominal', i.amount); $('inputKet').value = i.ket || '';
-  $('hbCount').textContent = (i.history || []).length; setModalMode(true); openModal('addModal');
+  setModalMode(true); openModal('addModal');
 }
 function closeAddModal() { closeModal('addModal'); setTimeout(() => editingId = null, 300); }
 function openBudgetModal() { setMoney('inputTotalBudget', totalBudget); $('inputTopup').value = ''; $('inputTopupNote').value = ''; renderTopups(); openModal('budgetModal'); }
@@ -542,7 +651,7 @@ function bindEnter(id, fn) {
 document.addEventListener('DOMContentLoaded', () => {
   bindEnter('inputTopup', handleTopup);
   bindEnter('inputTopupNote', handleTopup);
-  bindEnter('hName', addHist); bindEnter('hAmt', addHist); bindEnter('hDate', addHist);
+  bindEnter('hName', addDaily); bindEnter('hAmt', addDaily); bindEnter('hDate', addDaily);
   bindEnter('svAmount', addSv);
   bindEnter('svNote', addSv);
   bindEnter('svDate', addSv);
@@ -575,7 +684,7 @@ function closeSavings() {
   const v = $('savingsView'); v.classList.remove('open'); document.body.style.overflow = '';
   setTimeout(() => v.classList.remove('show'), 260);
 }
-document.addEventListener('keydown', e => { if (e.key !== 'Escape') return; if ($('histView').classList.contains('show')) closeHistory(); else if ($('savingsView').classList.contains('show')) closeSavings(); });
+document.addEventListener('keydown', e => { if (e.key !== 'Escape') return; if ($('histView').classList.contains('show')) closeDaily(); else if ($('savingsView').classList.contains('show')) closeSavings(); });
 
 function setSvType(t) {
   svType = t;
@@ -627,45 +736,41 @@ function renderSavings() {
 }
 
 
-// ===== Detail Riwayat per item =====
-let histId = null;
-const curItem = () => items.find(i => i.id === histId);
-function openHistory() {
-  if (editingId === null) return;
-  histId = editingId; closeAddModal();
+// ===== Pengeluaran Sehari-hari (mengambil dari total saldo) =====
+let daily = [];
+function loadDaily() { try { const r = localStorage.getItem('payflow_v2_daily'); if (r) daily = JSON.parse(r); } catch (e) {} }
+function saveDaily() { try { localStorage.setItem('payflow_v2_daily', JSON.stringify(daily)); } catch (e) {} }
+const dailyTotal = () => daily.reduce((t, d) => t + d.amount, 0);
+const dailyOn = date => daily.filter(d => d.date === date).reduce((t, d) => t + d.amount, 0);
+const paymentsTotal = () => items.filter(i => i.checked).reduce((t, i) => t + i.amount, 0);
+function calcRemaining() { return totalBudget - paymentsTotal() - dailyTotal(); }
+
+function openDaily() {
   $('hDate').value = todayStr(); $('hName').value = ''; $('hAmt').value = '';
-  renderHist();
+  renderDaily();
   const v = $('histView'); v.classList.add('show'); document.body.style.overflow = 'hidden';
   requestAnimationFrame(() => requestAnimationFrame(() => v.classList.add('open'))); v.scrollTop = 0;
 }
-function closeHistory() {
+function closeDaily() {
   const v = $('histView'); v.classList.remove('open'); document.body.style.overflow = '';
   setTimeout(() => v.classList.remove('show'), 260);
-  histId = null; saveLocalStorage(); renderItemList();
 }
-const histUsed = it => (it.history || []).reduce((t, h) => t + h.amount, 0);
-function addHist() {
-  const it = curItem(); if (!it) return;
+function addDaily() {
   const name = $('hName').value.trim(), amt = num('hAmt'), date = $('hDate').value || todayStr();
   if (!name) { $('hName').focus(); return; }
   if (isNaN(amt) || amt <= 0) { $('hAmt').focus(); return; }
-  const left = it.amount - histUsed(it);
+  const left = calcRemaining();
   if (amt > left) { showToast('Melebihi sisa saldo (' + formatRupiah(Math.max(0, left)) + ')'); return; }
-  (it.history = it.history || []).push({ id: Date.now(), date, name, amount: amt });
-  saveLocalStorage(); $('hName').value = ''; $('hAmt').value = ''; renderHist(); $('hName').focus();
+  daily.push({ id: Date.now(), date, name, amount: amt });
+  saveDaily(); updateAll(); $('hName').value = ''; $('hAmt').value = ''; renderDaily(); $('hName').focus();
   showToast('Pengeluaran dicatat');
 }
-function delHist(id) {
-  const it = curItem(); if (!it) return;
-  it.history = (it.history || []).filter(h => h.id !== id);
-  saveLocalStorage(); renderHist(); showToast('Pengeluaran dihapus');
-}
-function renderHist() {
-  const it = curItem(); if (!it) return;
-  const used = histUsed(it), left = it.amount - used;
-  $('hTitle').textContent = it.judul; $('hLbl').textContent = 'Saldo ' + it.judul;
-  $('hSaldo').textContent = formatRupiah(it.amount); $('hUsed').textContent = formatRupiah(used); $('hLeft').textContent = formatRupiah(left);
-  const by = {}; (it.history || []).forEach(h => (by[h.date] = by[h.date] || []).push(h));
+function delDaily(id) { daily = daily.filter(d => d.id !== id); saveDaily(); updateAll(); renderDaily(); showToast('Pengeluaran dihapus'); }
+function renderDaily() {
+  const rem = calcRemaining();
+  $('hLbl').textContent = 'Sisa Saldo'; $('hSaldo').textContent = formatRupiah(rem);
+  $('hUsed').textContent = formatRupiah(dailyOn(todayStr())); $('hLeft').textContent = formatRupiah(dailyTotal());
+  const by = {}; daily.forEach(h => (by[h.date] = by[h.date] || []).push(h));
   const dates = Object.keys(by).sort((a, b) => b.localeCompare(a));
   if (!dates.length) { $('hList').innerHTML = '<div class="glass"><div class="empty" style="background:none;border:0;padding:20px 0">Belum ada pengeluaran. Tambahkan tanggal dan pengeluaran di atas.</div></div>'; return; }
   $('hList').innerHTML = dates.map(d => {
@@ -673,10 +778,192 @@ function renderHist() {
     return `<div class="glass">
       <div class="dayh"><div class="dbadge out"><small>${dt.toLocaleDateString('id-ID', { weekday: 'short' })}</small><b>${dt.getDate()}</b><small>${dt.toLocaleDateString('id-ID', { month: 'short' })}</small></div>
         <div class="mid"><h5>${fmtFull(d)}</h5><p>${list.length} pengeluaran</p></div><span class="a out-c" style="font-weight:700;font-size:14px">− ${formatRupiah(tot)}</span></div>
-      <div class="hist">${list.map(h => `<div class="hrow"><span class="n">${escapeHtml(h.name)}</span><span class="a">− ${formatRupiah(h.amount)}</span><button class="del" onclick="delHist(${h.id})" title="Hapus">${icon('trash')}</button></div>`).join('')}</div>
+      <div class="hist">${list.map(h => `<div class="hrow"><span class="n">${escapeHtml(h.name)}</span><span class="a">− ${formatRupiah(h.amount)}</span><button class="del" onclick="delDaily(${h.id})" title="Hapus">${icon('trash')}</button></div>`).join('')}</div>
     </div>`;
   }).join('');
 }
+
+
+// ===== PIN & Kunci Aplikasi =====
+const PIN_KEY = 'payflow_pin', LOCK_KEY = 'payflow_lock', LOCK_MS = 30000;
+const jget = (k, d) => { try { const r = localStorage.getItem(k); return r ? JSON.parse(r) : d; } catch (e) { return d; } };
+const jset = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+let pinCfg = null, lockSt = { fails: 0, until: 0, rounds: 0, qfails: 0 }, entry = '', lockTimer = null;
+const normAns = a => a.trim().toLowerCase().replace(/\s+/g, ' ');
+async function sha(t) {
+  try {
+    if (window.crypto && crypto.subtle) {
+      const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(t));
+      return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join('');
+    }
+  } catch (e) {}
+  let h1 = 0xdeadbeef, h2 = 0x41c6ce57;
+  for (let i = 0; i < t.length; i++) { const c = t.charCodeAt(i); h1 = Math.imul(h1 ^ c, 2654435761); h2 = Math.imul(h2 ^ c, 1597334677); }
+  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+  return 'f' + (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(16);
+}
+const newSalt = () => Array.from({ length: 16 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
+const saveLock = () => jset(LOCK_KEY, lockSt);
+const resetLock = () => { lockSt = { fails: 0, until: 0, rounds: 0, qfails: 0 }; saveLock(); };
+const isLocked = () => lockSt.until > Date.now();
+const pinOk = async p => !!pinCfg && (await sha(pinCfg.salt + ':' + p)) === pinCfg.hash;
+const validPin = p => /^\d{6}$/.test(p);
+
+function initPin() {
+  pinCfg = jget(PIN_KEY, null);
+  lockSt = Object.assign({ fails: 0, until: 0, rounds: 0, qfails: 0 }, jget(LOCK_KEY, {}));
+  $('lockBtn').classList.toggle('on', !!pinCfg);
+  if (pinCfg) showLock(); else document.documentElement.classList.remove('locked');
+}
+function lockPane(p) {
+  $('lkPin').style.display = p === 'pin' ? '' : 'none';
+  $('lkForgot').style.display = p === 'forgot' ? '' : 'none';
+  $('lkReset').style.display = p === 'reset' ? '' : 'none';
+}
+function showLock() {
+  document.documentElement.classList.add('locked'); $('lockScreen').classList.add('show');
+  entry = ''; renderDots(); lockPane('pin'); refreshLockUI();
+}
+function hideLock() { document.documentElement.classList.remove('locked'); $('lockScreen').classList.remove('show'); entry = ''; renderDots(); }
+function renderDots() { [...$('dots').children].forEach((d, i) => d.classList.toggle('f', i < entry.length)); }
+function setMsg(t, err) { const m = $('lockMsg'); m.textContent = t; m.className = 'lmsg' + (err ? ' err' : ''); }
+function refreshLockUI() {
+  clearInterval(lockTimer);
+  $('forgotBtn').style.display = lockSt.rounds >= 2 ? 'inline-block' : 'none';
+  const tick = () => {
+    const rem = Math.ceil((lockSt.until - Date.now()) / 1000);
+    if (rem > 0) { $('keypad').classList.add('off'); setMsg('Terlalu banyak percobaan. Coba lagi dalam ' + rem + ' detik', true); }
+    else { clearInterval(lockTimer); $('keypad').classList.remove('off'); if ($('lockMsg').classList.contains('err') && lockSt.fails === 0) setMsg('Masukkan PIN Anda'); }
+  };
+  tick(); if (isLocked()) lockTimer = setInterval(tick, 500);
+}
+function keyPress(k) {
+  if (isLocked() || !pinCfg) return;
+  if (k === 'bs') entry = entry.slice(0, -1);
+  else if (entry.length < 6) entry += k;
+  renderDots();
+  if (entry.length === 6) checkEntry();
+}
+async function checkEntry() {
+  const ok = await pinOk(entry);
+  if (ok) { resetLock(); hideLock(); return; }
+  lockSt.fails++;
+  if (lockSt.fails >= 3) { lockSt.fails = 0; lockSt.rounds++; lockSt.until = Date.now() + LOCK_MS; }
+  saveLock();
+  const d = $('dots'); d.classList.remove('shake'); void d.offsetWidth; d.classList.add('shake');
+  entry = ''; setTimeout(renderDots, 250);
+  if (isLocked()) refreshLockUI(); else { setMsg('PIN salah. Sisa percobaan: ' + (3 - lockSt.fails), true); refreshLockUI(); }
+}
+document.addEventListener('keydown', e => {
+  if (!$('lockScreen').classList.contains('show') || $('lkPin').style.display === 'none') return;
+  if (/^\d$/.test(e.key)) keyPress(e.key); else if (e.key === 'Backspace') keyPress('bs');
+});
+function openForgot() {
+  if (!pinCfg) return;
+  $('lfQ').textContent = pinCfg.q; $('lfAns').value = ''; $('lfErr').textContent = ''; lockPane('forgot'); refreshForgotUI();
+}
+let forgotTimer = null;
+function refreshForgotUI() {
+  clearInterval(forgotTimer);
+  const err = $('lfErr'), btn = $('lfBtn'), inp = $('lfAns');
+  const tick = () => {
+    const rem = Math.ceil((lockSt.until - Date.now()) / 1000);
+    if (rem > 0) { btn.disabled = true; inp.disabled = true; err.dataset.cd = '1'; err.textContent = 'Terlalu banyak percobaan. Coba lagi dalam ' + rem + ' detik'; }
+    else {
+      clearInterval(forgotTimer); btn.disabled = false; inp.disabled = false;
+      if (err.dataset.cd === '1') { err.textContent = ''; err.dataset.cd = ''; inp.focus(); }
+    }
+  };
+  tick(); if (isLocked()) forgotTimer = setInterval(tick, 500);
+}
+function backToPin() { clearInterval(forgotTimer); lockPane('pin'); refreshLockUI(); }
+async function verifyAnswer() {
+  if (isLocked()) { refreshForgotUI(); return; }
+  const a = normAns($('lfAns').value); if (!a) { $('lfAns').focus(); return; }
+  if ((await sha(pinCfg.salt + ':a:' + a)) === pinCfg.ah) { lockSt.qfails = 0; saveLock(); $('lrNew').value = ''; $('lrNew2').value = ''; $('lrErr').textContent = ''; lockPane('reset'); return; }
+  lockSt.qfails++;
+  if (lockSt.qfails >= 3) { lockSt.qfails = 0; lockSt.rounds++; lockSt.until = Date.now() + LOCK_MS; saveLock(); refreshForgotUI(); return; }
+  saveLock(); $('lfErr').textContent = 'Jawaban salah. Sisa percobaan: ' + (3 - lockSt.qfails);
+}
+async function saveResetPin() {
+  const a = $('lrNew').value, b = $('lrNew2').value;
+  if (!validPin(a)) { $('lrErr').textContent = 'PIN harus 6 angka'; return; }
+  if (a !== b) { $('lrErr').textContent = 'PIN tidak sama'; return; }
+  pinCfg.hash = await sha(pinCfg.salt + ':' + a); jset(PIN_KEY, pinCfg);
+  resetLock(); hideLock(); showToast('PIN berhasil diubah');
+}
+
+// Auto-kunci: tab/browser ditinggal lebih dari 30 detik -> terkunci lagi
+const AUTO_MS = 30000; let awayAt = null;
+function markAway() {
+  if (!pinCfg || awayAt !== null || $('lockScreen').classList.contains('show')) return;
+  awayAt = Date.now(); try { localStorage.setItem('payflow_away', awayAt); } catch (e) {}
+}
+function checkAway() {
+  let t = awayAt; awayAt = null;
+  try { if (t === null) t = parseInt(localStorage.getItem('payflow_away'), 10) || null; localStorage.removeItem('payflow_away'); } catch (e) {}
+  if (pinCfg && t && Date.now() - t > AUTO_MS && !$('lockScreen').classList.contains('show')) showLock();
+}
+document.addEventListener('visibilitychange', () => { document.hidden ? markAway() : checkAway(); });
+window.addEventListener('pagehide', markAway);
+window.addEventListener('blur', markAway);
+window.addEventListener('focus', checkAway);
+
+// --- pengaturan PIN ---
+let pnTmp = '';
+const PN_TITLES = { create: 'Buat PIN', q: 'Pertanyaan Keamanan', menu: 'Kunci PIN', change: 'Ubah PIN', editq: 'Ubah Pertanyaan', off: 'Matikan PIN' };
+const PN_HINTS = { create: 'PIN terdiri dari 6 angka dan diminta setiap aplikasi dibuka.', q: 'Dipakai untuk memulihkan akses jika Anda lupa PIN. Tulis pertanyaan dan jawaban Anda sendiri.', menu: 'PIN aktif. Aplikasi akan meminta PIN saat dibuka.', change: '', editq: '', off: '' };
+function setPnPane(p) {
+  document.querySelectorAll('.pn-pane').forEach(el => el.classList.toggle('on', el.id === 'pn-' + p));
+  $('pnTitle').textContent = PN_TITLES[p]; $('pnHint').textContent = PN_HINTS[p]; $('pnErr').textContent = '';
+  const f = document.querySelector('#pn-' + p + ' input'); if (f) setTimeout(() => f.focus(), 60);
+}
+function openPinModal() {
+  document.querySelectorAll('#pinModal input').forEach(i => i.value = '');
+  setPnPane(pinCfg ? 'menu' : 'create'); openModal('pinModal');
+}
+const pnErr = t => { $('pnErr').textContent = t; };
+function pnNext() {
+  const a = $('pnNew').value, b = $('pnNew2').value;
+  if (!validPin(a)) return pnErr('PIN harus 6 angka');
+  if (a !== b) return pnErr('PIN tidak sama');
+  pnTmp = a; setPnPane('q');
+}
+async function pnSaveNew() {
+  const q = $('pnQ').value.trim(), a = normAns($('pnA').value);
+  if (q.length < 3) return pnErr('Isi pertanyaan keamanan');
+  if (!a) return pnErr('Isi jawaban');
+  const salt = newSalt();
+  pinCfg = { salt, hash: await sha(salt + ':' + pnTmp), q, ah: await sha(salt + ':a:' + a) };
+  jset(PIN_KEY, pinCfg); resetLock(); pnTmp = '';
+  $('lockBtn').classList.add('on'); closeModal('pinModal'); showToast('PIN diaktifkan');
+}
+async function pnChange() {
+  if (!(await pinOk($('chOld').value))) return pnErr('PIN lama salah');
+  const a = $('chNew').value, b = $('chNew2').value;
+  if (!validPin(a)) return pnErr('PIN baru harus 6 angka');
+  if (a !== b) return pnErr('PIN baru tidak sama');
+  pinCfg.hash = await sha(pinCfg.salt + ':' + a); jset(PIN_KEY, pinCfg); closeModal('pinModal'); showToast('PIN diubah');
+}
+async function pnEditQ() {
+  if (!(await pinOk($('eqPin').value))) return pnErr('PIN salah');
+  const q = $('eqQ').value.trim(), a = normAns($('eqA').value);
+  if (q.length < 3 || !a) return pnErr('Isi pertanyaan dan jawaban');
+  pinCfg.q = q; pinCfg.ah = await sha(pinCfg.salt + ':a:' + a); jset(PIN_KEY, pinCfg); closeModal('pinModal'); showToast('Pertanyaan diperbarui');
+}
+async function pnOff() {
+  if (!(await pinOk($('offPin').value))) return pnErr('PIN salah');
+  pinCfg = null; try { localStorage.removeItem(PIN_KEY); } catch (e) {} resetLock();
+  $('lockBtn').classList.remove('on'); closeModal('pinModal'); showToast('PIN dimatikan');
+}
+document.addEventListener('input', e => { if (e.target.classList && e.target.classList.contains('pin-in')) e.target.value = e.target.value.replace(/\D/g, '').slice(0, 6); });
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return;
+  if ($('pinModal').classList.contains('show')) { const b = document.querySelector('#pinModal .pn-pane.on .pn-go'); if (b) { e.preventDefault(); b.click(); } }
+  else if ($('lkForgot').style.display !== 'none' && $('lockScreen').classList.contains('show')) { e.preventDefault(); verifyAnswer(); }
+  else if ($('lkReset').style.display !== 'none' && $('lockScreen').classList.contains('show')) { e.preventDefault(); saveResetPin(); }
+});
 
 // Drag & drop urutan (handle di kanan, tanpa library)
 function initDrag() {
