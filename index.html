@@ -155,14 +155,14 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 .hrow{display:flex;align-items:center;gap:10px;padding:10px 6px 10px 12px;border-radius:14px;background:rgba(255,255,255,.7);border:1px solid #fff}
 .hrow .n{flex:1;min-width:0;font-size:14px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .hrow .a{font-weight:700;font-size:14px;color:#EE7B30;white-space:nowrap}
-#histView .vwrap,#savingsView .vwrap{padding:14px 14px 40px}
-#histView .vbar,#savingsView .vbar{margin-bottom:12px;gap:10px}#histView .vbar .back,#savingsView .vbar .back{width:36px;height:36px;font-size:17px}
-#histView .vbar h2,#savingsView .vbar h2{font-size:20px}#histView .vbar p,#savingsView .vbar p{font-size:11px}
-#histView .hero,#savingsView .hero{padding:14px 16px;border-radius:22px;margin-bottom:10px}
-#histView .hero .num,#savingsView .hero .num{font-size:24px;margin-top:2px}
-#histView .hero .chips,#savingsView .hero .chips{margin-top:10px;gap:8px}
-#histView .chip,#savingsView .chip{padding:7px 10px;border-radius:12px;font-size:10px}#histView .chip b,#savingsView .chip b{font-size:13px;margin-top:1px}
-#histView .glass,#savingsView .glass{padding:14px;border-radius:22px;margin-bottom:10px}
+#histView .vwrap,#savingsView .vwrap,#chartView .vwrap{padding:14px 14px 40px}
+#histView .vbar,#savingsView .vbar,#chartView .vbar{margin-bottom:12px;gap:10px}#histView .vbar .back,#savingsView .vbar .back,#chartView .vbar .back{width:36px;height:36px;font-size:17px}
+#histView .vbar h2,#savingsView .vbar h2,#chartView .vbar h2{font-size:20px}#histView .vbar p,#savingsView .vbar p,#chartView .vbar p{font-size:11px}
+#histView .hero,#savingsView .hero,#chartView .hero{padding:14px 16px;border-radius:22px;margin-bottom:10px}
+#histView .hero .num,#savingsView .hero .num,#chartView .hero .num{font-size:24px;margin-top:2px}
+#histView .hero .chips,#savingsView .hero .chips,#chartView .hero .chips{margin-top:10px;gap:8px}
+#histView .chip,#savingsView .chip,#chartView .chip{padding:7px 10px;border-radius:12px;font-size:10px}#histView .chip b,#savingsView .chip b,#chartView .chip b{font-size:13px;margin-top:1px}
+#histView .glass,#savingsView .glass,#chartView .glass{padding:14px;border-radius:22px;margin-bottom:10px}
 .hform .hf-row{display:flex;gap:8px;margin-bottom:8px}.hform .hf-row:last-child{margin-bottom:0}
 .hform input{min-width:0;width:100%;padding:11px 13px;border-radius:14px;border:1.5px solid #E1E8FA;background:#fff;font-size:13px;outline:0}
 .hform input:focus{border-color:var(--violet)}
@@ -237,6 +237,10 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 .dtap{cursor:pointer;transition:.15s}.dtap:active{transform:scale(.985)}
 .dchev{color:var(--muted);font-size:18px;transition:transform .2s}.dgrp.open .dchev{transform:rotate(90deg)}
 .dd{display:none;margin:6px 0 4px 10px;padding-left:10px;border-left:2px solid #DCE4F8}.dgrp.open .dd{display:block}
+#chartView .seg button.on{background:linear-gradient(135deg,var(--violet),var(--teal));color:#fff}
+.legend{display:flex;gap:14px;font-size:11px;color:var(--muted);margin-bottom:6px}.legend i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:5px}
+.chd{margin-top:10px;padding:10px 12px;border-radius:14px;background:#EEF3FF;font-size:12px}
+.chd b{display:block;font-size:13px;margin-bottom:6px}.chd div{display:flex;justify-content:space-between;gap:8px;font-weight:600}
 .topup{margin-top:20px;padding-top:18px;border-top:1.5px dashed #D5DDF3}
 .topup-row{display:flex;gap:10px}.topup-row .rp{flex:1}
 .topup-row button{padding:0 20px;border-radius:99px;font-weight:600;font-size:14px;background:linear-gradient(135deg,var(--teal),#35A7F0);color:#fff;box-shadow:0 12px 22px -10px rgba(46,196,182,.9)}
@@ -252,6 +256,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <symbol id="i-chevr" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
 <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
 <symbol id="i-bs" viewBox="0 0 24 24"><path d="M21 4H8l-6 8 6 8h13a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1zM17 9l-6 6M11 9l6 6"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18M7 15l4-4 3 3 5-6"/></symbol>
 <symbol id="i-back" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
 <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></symbol>
 <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14M19 12l-7 7-7-7"/></symbol>
@@ -292,7 +297,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
       <div class="bar" id="barWrap"><i id="budgetProgressBar" style="width:100%"></i></div>
     </div>
   </div>
-  <div class="stat pay">
+  <div class="stat pay" onclick="openChart()" style="cursor:pointer"><svg class="ic" style="position:absolute;right:16px;top:16px;font-size:18px;color:var(--rose);opacity:.8"><use href="#i-chart"/></svg>
     <div>
       <div class="lbl" style="color:var(--rose)">Pembayaran</div>
       <div id="totalPaymentDisplay" class="num serif">Rp 0</div>
@@ -507,6 +512,33 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
   </div>
 </div>
 
+<div id="chartView" class="view">
+  <div class="vwrap">
+    <div class="vbar">
+      <button class="back" onclick="closeChart()" aria-label="Kembali"><svg class="ic"><use href="#i-back"/></svg></button>
+      <div><h2>Grafik Keuangan</h2><p>Pemasukan &amp; pengeluaran</p></div>
+    </div>
+    <div class="hero">
+      <div class="lbl" id="chRange">Selisih</div>
+      <div id="chNet" class="num">Rp 0</div>
+      <div class="chips">
+        <div class="chip">Pemasukan<b id="chIn">Rp 0</b></div>
+        <div class="chip">Pengeluaran<b id="chOut">Rp 0</b></div>
+      </div>
+    </div>
+    <div class="glass">
+      <div class="seg" style="margin-bottom:12px">
+        <button id="chDay" class="on" onclick="setChMode('day')">Harian</button>
+        <button id="chMon" onclick="setChMode('month')">Bulanan</button>
+      </div>
+      <div class="legend"><span><i style="background:#14A39A"></i>Pemasukan</span><span><i style="background:#EE7B30"></i>Pengeluaran</span></div>
+      <svg id="chSvg" viewBox="0 0 340 190" style="width:100%;height:auto;display:block"></svg>
+      <div id="chDetail" class="chd"></div>
+    </div>
+    <p class="hint" style="text-align:center;margin-top:4px">Pemasukan: tambah saldo &amp; atur saldo. Pengeluaran: pembayaran yang dicentang &amp; pengeluaran sehari-hari.</p>
+  </div>
+</div>
+
 <div id="toast"><svg class="ic"><use href="#i-check"/></svg><span id="toastMsg"></span></div>
 
 <script>
@@ -519,7 +551,7 @@ let items = [
 const $ = id => document.getElementById(id);
 const icon = n => `<svg class="ic"><use href="#i-${n}"/></svg>`;
 
-document.addEventListener('DOMContentLoaded', () => { loadLocalStorage(); loadSv(); loadTopups(); loadDaily(); updateAll(); initDrag(); initPin(); ['pay', 'daily', 'top'].forEach(g => setSrc(g, 'cash')); checkMonthReset(); });
+document.addEventListener('DOMContentLoaded', () => { loadLocalStorage(); loadSv(); loadTopups(); loadDaily(); loadPayLog(); updateAll(); initDrag(); initPin(); ['pay', 'daily', 'top'].forEach(g => setSrc(g, 'cash')); checkMonthReset(); });
 
 const budgetTotal = () => budget.cash + budget.emoney;
 const SRC = { cash: 'Cash', emoney: 'E-money' };
@@ -531,7 +563,7 @@ document.addEventListener('click', e => { const b = e.target.closest && e.target
 function wallets() {
   const w = { cash: budget.cash, emoney: budget.emoney };
   items.forEach(i => { if (i.checked) w[srcOf(i)] -= i.amount; });
-  daily.forEach(d => { w[srcOf(d)] -= d.amount; });
+  daily.forEach(d => { if (!d.settled) w[srcOf(d)] -= d.amount; });
   return w;
 }
 
@@ -592,15 +624,26 @@ function renderItemList() {
     </div>`).join('');
 }
 
+let payLog = [];
+function loadPayLog() {
+  try { const r = localStorage.getItem('payflow_v2_paylog'); if (r) payLog = JSON.parse(r); } catch (e) {}
+  items.forEach(i => { if (i.checked && !payLog.some(p => p.item === i.id)) logPay(i, true); });
+  savePayLog();
+}
+function savePayLog() { try { localStorage.setItem('payflow_v2_paylog', JSON.stringify(payLog)); } catch (e) {} }
+function logPay(it, silent) { payLog.push({ id: Date.now() + Math.random(), item: it.id, date: todayStr(), amount: it.amount, name: it.judul, src: srcOf(it) }); if (!silent) savePayLog(); }
+function unlogPay(it) { for (let k = payLog.length - 1; k >= 0; k--) { if (payLog[k].item === it.id) { payLog.splice(k, 1); break; } } savePayLog(); }
+
 function toggleCheck(id) {
   const idx = items.findIndex(x => x.id === id); if (idx < 0) return;
   const it = items.splice(idx, 1)[0];
   it.checked = !it.checked;
+  if (it.checked) logPay(it); else unlogPay(it);
   if (it.checked) items.push(it);   // dicentang -> paling bawah
   else items.unshift(it);           // batal centang -> selalu kembali ke paling atas
   saveLocalStorage(); updateAll();
 }
-function selectAll(s) { items.forEach(i => i.checked = s); saveLocalStorage(); updateAll(); showToast(s ? 'Semua item dicentang' : 'Semua centang dibatalkan'); }
+function selectAll(s) { items.forEach(i => { if (i.checked !== s) { i.checked = s; s ? logPay(i) : unlogPay(i); } }); saveLocalStorage(); updateAll(); showToast(s ? 'Semua item dicentang' : 'Semua centang dibatalkan'); }
 function handleSearch() { searchQuery = $('searchInput').value; renderItemList(); }
 function setFilter(f) {
   activeFilter = f;
@@ -614,7 +657,7 @@ function handleAddPayment(e) {
   if (!judul || isNaN(amount) || amount <= 0) return;
   if (editingId !== null) {
     const t = items.find(i => i.id === editingId);
-    if (t) { t.judul = judul; t.amount = amount; t.ket = ket; t.src = srcSel.pay; }
+    if (t) { t.judul = judul; t.amount = amount; t.ket = ket; t.src = srcSel.pay; if (t.checked) { for (let k = payLog.length - 1; k >= 0; k--) if (payLog[k].item === t.id) { Object.assign(payLog[k], { amount, name: judul, src: t.src }); break; } savePayLog(); } }
     saveLocalStorage(); updateAll(); closeAddModal(); showToast('Perubahan disimpan!'); return;
   }
   let pos = 0; items.forEach((x, k) => { if (!x.checked) pos = k + 1; });
@@ -645,7 +688,11 @@ function closeBudgetModal() { closeModal('budgetModal'); }
 function handleSaveBudget(e) {
   e.preventDefault();
   const c = num('inputBudgetCash'), m = num('inputBudgetEmoney');
-  budget = { cash: isNaN(c) ? 0 : c, emoney: isNaN(m) ? 0 : m };
+  const nc = isNaN(c) ? 0 : c, nm = isNaN(m) ? 0 : m;
+  if (nc > budget.cash) topups.push({ id: Date.now(), ts: Date.now(), amount: nc - budget.cash, ket: 'Atur saldo', src: 'cash' });
+  if (nm > budget.emoney) topups.push({ id: Date.now() + 1, ts: Date.now(), amount: nm - budget.emoney, ket: 'Atur saldo', src: 'emoney' });
+  saveTopups(); renderTopups();
+  budget = { cash: nc, emoney: nm };
   saveLocalStorage(); updateAll(); closeBudgetModal(); showToast('Saldo awal diperbarui!');
 }
 
@@ -735,7 +782,7 @@ function closeSavings() {
   const v = $('savingsView'); v.classList.remove('open'); document.body.style.overflow = '';
   setTimeout(() => v.classList.remove('show'), 260);
 }
-document.addEventListener('keydown', e => { if (e.key !== 'Escape') return; if ($('histView').classList.contains('show')) closeDaily(); else if ($('savingsView').classList.contains('show')) closeSavings(); });
+document.addEventListener('keydown', e => { if (e.key !== 'Escape') return; if ($('chartView').classList.contains('show')) closeChart(); else if ($('histView').classList.contains('show')) closeDaily(); else if ($('savingsView').classList.contains('show')) closeSavings(); });
 
 let svTab = 'in';
 function setSvTab(t) {
@@ -797,7 +844,7 @@ function renderSavings() {
 let daily = [];
 function loadDaily() { try { const r = localStorage.getItem('payflow_v2_daily'); if (r) daily = JSON.parse(r); } catch (e) {} }
 function saveDaily() { try { localStorage.setItem('payflow_v2_daily', JSON.stringify(daily)); } catch (e) {} }
-const dailyTotal = () => daily.reduce((t, d) => t + d.amount, 0);
+const dailyTotal = () => daily.filter(d => !d.settled).reduce((t, d) => t + d.amount, 0);
 const dailyOn = date => daily.filter(d => d.date === date).reduce((t, d) => t + d.amount, 0);
 const paymentsTotal = () => items.filter(i => i.checked).reduce((t, i) => t + i.amount, 0);
 function calcRemaining() { const w = wallets(); return w.cash + w.emoney; }
@@ -1029,21 +1076,106 @@ document.addEventListener('keydown', e => {
 });
 
 
-// ===== Reset awal bulan: centang kembali kosong, nominal hangus (tidak dikembalikan ke saldo) =====
+// ===== Awal bulan: saldo awal = sisa uang, centang direset =====
 const monthKey = () => { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'); };
 function checkMonthReset() {
   const cur = monthKey(); let last = null;
   try { last = localStorage.getItem('payflow_v2_month'); } catch (e) {}
   if (!last) { try { localStorage.setItem('payflow_v2_month', cur); } catch (e) {} return; }
   if (cur <= last) return;
-  let burned = 0;
-  items.forEach(i => { if (i.checked) { budget[srcOf(i)] -= i.amount; burned += i.amount; i.checked = false; } });
+  const w = wallets(), left = w.cash + w.emoney;
+  budget = { cash: w.cash, emoney: w.emoney };       // saldo awal bulan baru = sisa uang bulan lalu
+  items.forEach(i => { i.checked = false; });         // centang kembali kosong (nominal hangus)
+  daily.forEach(d => { d.settled = true; });          // pengeluaran harian bulan lalu sudah masuk perhitungan sisa
   try { localStorage.setItem('payflow_v2_month', cur); } catch (e) {}
-  saveLocalStorage(); updateAll();
-  if (burned > 0) showToast('Awal bulan: centang direset, ' + formatRupiah(burned) + ' hangus');
+  saveLocalStorage(); saveDaily(); updateAll();
+  showToast('Awal bulan: saldo awal & jumlah uang ' + formatRupiah(left));
 }
 document.addEventListener('visibilitychange', () => { if (!document.hidden) checkMonthReset(); });
 window.addEventListener('focus', checkMonthReset);
+
+
+// ===== Grafik Pemasukan & Pengeluaran =====
+let chMode = 'day', chSel = -1;
+const dateKey = ts => new Date(ts).toLocaleDateString('en-CA');
+function fmtShort(n) {
+  if (n >= 1e6) return (Math.round(n / 1e5) / 10).toString().replace('.', ',') + ' jt';
+  if (n >= 1e3) return Math.round(n / 1e3) + ' rb';
+  return String(Math.round(n));
+}
+function niceMax(m) {
+  if (m <= 0) return 1000;
+  const p = Math.pow(10, Math.floor(Math.log10(m))), f = m / p;
+  return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * p;
+}
+function buildSeries(mode) {
+  const inc = {}, out = {}, add = (o, k, v) => { o[k] = (o[k] || 0) + v; };
+  const K = d => mode === 'day' ? d : d.slice(0, 7);
+  topups.forEach(t => add(inc, K(dateKey(t.ts)), t.amount));
+  payLog.forEach(p => add(out, K(p.date), p.amount));
+  daily.forEach(d => add(out, K(d.date), d.amount));
+  const res = [], now = new Date();
+  if (mode === 'day') {
+    for (let i = 13; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i), k = d.toLocaleDateString('en-CA');
+      res.push({ cur: i === 0, label: String(d.getDate()), full: fmtFull(k), inc: inc[k] || 0, out: out[k] || 0 });
+    }
+  } else {
+    // Bulanan: mulai November 2026 dan seterusnya (minimal 6 bulan, maksimal 12 bulan terakhir)
+    const START = new Date(2026, 10, 1), elapsed = (now.getFullYear() - 2026) * 12 + now.getMonth() - 10 + 1;
+    const count = Math.min(12, Math.max(6, elapsed));
+    const first = elapsed > 12 ? new Date(now.getFullYear(), now.getMonth() - 11, 1) : START;
+    for (let i = 0; i < count; i++) {
+      const d = new Date(first.getFullYear(), first.getMonth() + i, 1), k = d.toLocaleDateString('en-CA').slice(0, 7);
+      res.push({ cur: d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth(), label: d.toLocaleDateString('id-ID', { month: 'short' }), rng: d.toLocaleDateString('id-ID', { month: 'short', year: 'numeric' }), full: d.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' }), inc: inc[k] || 0, out: out[k] || 0 });
+    }
+  }
+  return res;
+}
+function renderChart() {
+  const data = buildSeries(chMode);
+  if (chSel < 0 || chSel >= data.length) chSel = Math.max(0, data.findIndex(d => d.cur));
+  const W = 340, H = 190, L = 42, R = 6, T = 10, B = 26, pw = W - L - R, ph = H - T - B;
+  const mx = niceMax(Math.max(0, ...data.flatMap(d => [d.inc, d.out])));
+  const n = data.length, gw = pw / n, bw = Math.min(13, gw * 0.32);
+  let g = '';
+  [0, 0.5, 1].forEach(f => {
+    const y = T + ph * (1 - f);
+    g += `<line x1="${L}" x2="${W - R}" y1="${y}" y2="${y}" stroke="#DCE4F8" stroke-dasharray="${f ? '3 4' : '0'}"/><text x="${L - 6}" y="${y + 3}" text-anchor="end" font-size="9" fill="#8A84A3">${fmtShort(mx * f)}</text>`;
+  });
+  data.forEach((d, i) => {
+    const x0 = L + gw * i, cx = x0 + gw / 2, hi = ph * d.inc / mx, ho = ph * d.out / mx, sel = i === chSel;
+    g += `<g onclick="pickBar(${i})" style="cursor:pointer">` +
+      (sel ? `<rect x="${x0 + 1}" y="${T}" width="${gw - 2}" height="${ph}" rx="6" fill="rgba(79,110,247,.12)"/>` : '') +
+      `<rect x="${cx - bw - 1}" y="${T + ph - hi}" width="${bw}" height="${d.inc ? Math.max(hi, 2) : 0}" rx="3" fill="#14A39A"/>` +
+      `<rect x="${cx + 1}" y="${T + ph - ho}" width="${bw}" height="${d.out ? Math.max(ho, 2) : 0}" rx="3" fill="#EE7B30"/>` +
+      `<text x="${cx}" y="${H - 8}" text-anchor="middle" font-size="9" fill="${sel ? '#3A56D4' : '#8A84A3'}" font-weight="${sel ? 700 : 500}">${d.label}</text>` +
+      `<rect x="${x0}" y="0" width="${gw}" height="${H}" fill="transparent"/></g>`;
+  });
+  $('chSvg').innerHTML = g;
+  const ti = data.reduce((t, d) => t + d.inc, 0), to = data.reduce((t, d) => t + d.out, 0), net = ti - to;
+  $('chRange').textContent = (chMode === 'day' ? '14 hari terakhir' : data[0].rng + ' – ' + data[n - 1].rng) + ' · Selisih';
+  $('chNet').textContent = (net < 0 ? '− ' : net > 0 ? '+ ' : '') + formatRupiah(Math.abs(net));
+  $('chNet').className = 'num' + (net < 0 ? ' neg' : '');
+  $('chIn').textContent = formatRupiah(ti); $('chOut').textContent = formatRupiah(to);
+  const d = data[chSel], dn = d.inc - d.out;
+  $('chDetail').innerHTML = `<b>${d.full}</b><div><span class="in-c">Pemasukan</span><span class="in-c">${formatRupiah(d.inc)}</span></div><div><span class="out-c">Pengeluaran</span><span class="out-c">${formatRupiah(d.out)}</span></div><div><span>Selisih</span><span>${dn < 0 ? '− ' : dn > 0 ? '+ ' : ''}${formatRupiah(Math.abs(dn))}</span></div>`;
+}
+function pickBar(i) { chSel = i; renderChart(); }
+function setChMode(m) {
+  chMode = m; chSel = -1;
+  $('chDay').className = m === 'day' ? 'on' : ''; $('chMon').className = m === 'month' ? 'on' : '';
+  renderChart();
+}
+function openChart() {
+  renderChart();
+  const v = $('chartView'); v.classList.add('show'); document.body.style.overflow = 'hidden';
+  requestAnimationFrame(() => requestAnimationFrame(() => v.classList.add('open'))); v.scrollTop = 0;
+}
+function closeChart() {
+  const v = $('chartView'); v.classList.remove('open'); document.body.style.overflow = '';
+  setTimeout(() => v.classList.remove('show'), 260);
+}
 
 // Drag & drop urutan (handle di kanan, tanpa library)
 function initDrag() {
