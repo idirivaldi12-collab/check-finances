@@ -231,6 +231,12 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 .tabs2 button b{display:block;font-size:13px;margin-top:1px}
 .tabs2 button.on.in{background:#fff;color:#0E8A82;box-shadow:0 6px 14px -8px rgba(20,163,154,.8)}
 .tabs2 button.on.out{background:#fff;color:#D8651C;box-shadow:0 6px 14px -8px rgba(238,123,48,.8)}
+#histView .he{display:flex;align-items:center;padding:7px 8px;border-radius:14px;gap:10px;background:rgba(255,255,255,.7);border:1px solid #fff}
+#histView .he .mid{flex:1;min-width:0}#histView .he .mid h5{font-size:13px;font-weight:600}#histView .he .mid p{font-size:11px;color:var(--muted);margin-top:2px}
+#histView .he .a{font-size:13px;font-weight:700;white-space:nowrap}
+.dtap{cursor:pointer;transition:.15s}.dtap:active{transform:scale(.985)}
+.dchev{color:var(--muted);font-size:18px;transition:transform .2s}.dgrp.open .dchev{transform:rotate(90deg)}
+.dd{display:none;margin:6px 0 4px 10px;padding-left:10px;border-left:2px solid #DCE4F8}.dgrp.open .dd{display:block}
 .topup{margin-top:20px;padding-top:18px;border-top:1.5px dashed #D5DDF3}
 .topup-row{display:flex;gap:10px}.topup-row .rp{flex:1}
 .topup-row button{padding:0 20px;border-radius:99px;font-weight:600;font-size:14px;background:linear-gradient(135deg,var(--teal),#35A7F0);color:#fff;box-shadow:0 12px 22px -10px rgba(46,196,182,.9)}
@@ -513,7 +519,7 @@ let items = [
 const $ = id => document.getElementById(id);
 const icon = n => `<svg class="ic"><use href="#i-${n}"/></svg>`;
 
-document.addEventListener('DOMContentLoaded', () => { loadLocalStorage(); loadSv(); loadTopups(); loadDaily(); updateAll(); initDrag(); initPin(); ['pay', 'daily', 'top'].forEach(g => setSrc(g, 'cash')); });
+document.addEventListener('DOMContentLoaded', () => { loadLocalStorage(); loadSv(); loadTopups(); loadDaily(); updateAll(); initDrag(); initPin(); ['pay', 'daily', 'top'].forEach(g => setSrc(g, 'cash')); checkMonthReset(); });
 
 const budgetTotal = () => budget.cash + budget.emoney;
 const SRC = { cash: 'Cash', emoney: 'E-money' };
@@ -824,15 +830,21 @@ function renderDaily() {
   const by = {}; daily.forEach(h => (by[h.date] = by[h.date] || []).push(h));
   const dates = Object.keys(by).sort((a, b) => b.localeCompare(a));
   if (!dates.length) { $('hList').innerHTML = '<div class="glass"><div class="empty" style="background:none;border:0;padding:20px 0">Belum ada pengeluaran. Tambahkan tanggal dan pengeluaran di atas.</div></div>'; return; }
-  $('hList').innerHTML = dates.map(d => {
-    const dt = toDate(d), list = by[d].slice().sort((a, b) => b.id - a.id), tot = list.reduce((t, h) => t + h.amount, 0);
-    return `<div class="glass">
-      <div class="dayh"><div class="dbadge out"><small>${dt.toLocaleDateString('id-ID', { weekday: 'short' })}</small><b>${dt.getDate()}</b><small>${dt.toLocaleDateString('id-ID', { month: 'short' })}</small></div>
-        <div class="mid"><h5>${fmtFull(d)}</h5><p>${list.length} pengeluaran</p></div><span class="a out-c" style="font-weight:700;font-size:14px">− ${formatRupiah(tot)}</span></div>
-      <div class="hist">${list.map(h => `<div class="hrow"><span class="n">${escapeHtml(h.name)}${srcTag(h)}</span><span class="a">− ${formatRupiah(h.amount)}</span><button class="del" onclick="delDaily(${h.id})" title="Hapus">${icon('trash')}</button></div>`).join('')}</div>
+  $('hList').innerHTML = '<div class="glass"><div class="hist">' + dates.map(d => {
+    const dt = toDate(d), list = by[d].slice().sort((a, b) => b.id - a.id), tot = list.reduce((t, h) => t + h.amount, 0), open = openDays.has(d);
+    return `<div class="dgrp ${open ? 'open' : ''}">
+      <div class="he dtap" onclick="toggleDay('${d}')">
+        <div class="dbadge out"><small>${dt.toLocaleDateString('id-ID', { weekday: 'short' })}</small><b>${dt.getDate()}</b><small>${dt.toLocaleDateString('id-ID', { month: 'short' })}</small></div>
+        <div class="mid"><h5>${fmtFull(d)}</h5><p>${list.length} pengeluaran</p></div>
+        <span class="a out-c">− ${formatRupiah(tot)}</span>
+        <svg class="ic dchev"><use href="#i-chevr"/></svg>
+      </div>
+      <div class="dd"><div class="hist">${list.map(h => `<div class="hrow"><span class="n">${srcTag(h)}${escapeHtml(h.name)}</span><span class="a">− ${formatRupiah(h.amount)}</span><button class="del" onclick="delDaily(${h.id})" title="Hapus">${icon('trash')}</button></div>`).join('')}</div></div>
     </div>`;
-  }).join('');
+  }).join('') + '</div></div>';
 }
+let openDays = new Set();
+function toggleDay(d) { openDays.has(d) ? openDays.delete(d) : openDays.add(d); renderDaily(); }
 
 
 // ===== PIN & Kunci Aplikasi =====
@@ -1015,6 +1027,23 @@ document.addEventListener('keydown', e => {
   else if ($('lkForgot').style.display !== 'none' && $('lockScreen').classList.contains('show')) { e.preventDefault(); verifyAnswer(); }
   else if ($('lkReset').style.display !== 'none' && $('lockScreen').classList.contains('show')) { e.preventDefault(); saveResetPin(); }
 });
+
+
+// ===== Reset awal bulan: centang kembali kosong, nominal hangus (tidak dikembalikan ke saldo) =====
+const monthKey = () => { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'); };
+function checkMonthReset() {
+  const cur = monthKey(); let last = null;
+  try { last = localStorage.getItem('payflow_v2_month'); } catch (e) {}
+  if (!last) { try { localStorage.setItem('payflow_v2_month', cur); } catch (e) {} return; }
+  if (cur <= last) return;
+  let burned = 0;
+  items.forEach(i => { if (i.checked) { budget[srcOf(i)] -= i.amount; burned += i.amount; i.checked = false; } });
+  try { localStorage.setItem('payflow_v2_month', cur); } catch (e) {}
+  saveLocalStorage(); updateAll();
+  if (burned > 0) showToast('Awal bulan: centang direset, ' + formatRupiah(burned) + ' hangus');
+}
+document.addEventListener('visibilitychange', () => { if (!document.hidden) checkMonthReset(); });
+window.addEventListener('focus', checkMonthReset);
 
 // Drag & drop urutan (handle di kanan, tanpa library)
 function initDrag() {
